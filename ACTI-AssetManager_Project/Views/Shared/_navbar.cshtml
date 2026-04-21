@@ -1,0 +1,36 @@
+﻿﻿@* Archivo: Views/Shared/_navbar.cshtml *@
+<header>
+
+    <a asp-controller="Home" asp-action="Index" class="logo-link">
+        <div class="logo"></div>
+    </a>
+
+    <div class="container-option">
+        <ul>
+            <li><a asp-controller="Recursos" asp-action="Index">Recursos</a></li>
+            <li><a asp-controller="Mantenimiento" asp-action="Index">Mantenimiento</a></li>
+            <li><a asp-controller="Alerta" asp-action="Index">Alerta</a></li>
+            <li><a asp-controller="Asignacion" asp-action="Index">Asignación de Proyectos</a></li>
+            <li><a asp-controller="Licencia" asp-action="Index">Licencia</a></li>
+        </ul>
+    </div>
+
+    <div class="user-menu-container">
+        <div class="menu-container--iconAndName" onclick="toggleMenu(event)">
+            <div class="user-avatar-circle"></div>
+            <span id="userNameDisplay">
+                @* Esto te dirá si el problema es que no estás autenticado *@
+                @(User.Identity.IsAuthenticated ? User.Identity.Name : "No Autenticado")
+            </span>
+        </div>
+
+        @* Muestra el menú siempre para poder usar el botón de Logout y limpiar la cookie vieja *@
+        <div id="userDropdown" class="dropdown-content">
+            <div class="btn-logout">
+                <a href="/Auth/Logout">
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

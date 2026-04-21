@@ -1,0 +1,326 @@
+﻿@using ACTI_AssetManager_Project.Models.Asignacion
+@*Esto le dice a la vista que tipo de datos va a recibir desde el controlador*@
+@model AsignacionViewModel
+@{
+    //Aquí se define el titulo que aparece en la pestaña del navegador
+    ViewData["Title"] = "Asignación de Recursos";
+
+    //Indica que esta pagina se va a incrustar dentro de una plantilla
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Asignacion/Modales/ModalCrearAsignacion.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Asignacion.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Modales/ModalinformacionResponsableAsignacion.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Modales/ModalAsignarMasResponsables.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Modales/ModalEliminarAsignacion.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Modales/Toast-MensajesInfo.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Paginado.css" />
+    <link rel="stylesheet" href="~/css/Asignacion/Modales/ModalEditarAsignacion.css" />
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+}
+
+<div class="seccion-titulo">
+    <h1>Asignación de Recursos</h1>
+</div>
+
+
+@* <div class="resumen"> *@
+
+@*     <div class="resumen-card resumen-proyectoDisponible"> *@
+@*         <span class="resumen-numero"></span> *@
+@*         <span class="resumen-label"><h2>2 Proyectos disponibles</h2></span> *@
+@*     </div> *@
+
+@*     <div class="resumen-card resumen-proyectoAsignado"> *@
+@*         <span class="resumen-numero"></span> *@
+@*         <span class="resumen-label"><h2>4 Proyectos Asignados</h2></span> *@
+@*     </div> *@
+
+@* </div> *@
+
+
+
+
+
+@* ============================================================== *@
+@* Tabla de catalogo de proyectos asignados *@
+@* ============================================================== *@
+
+<div class="menu-interaccion">
+    <div class="contenedor-btnCrearAsignacion">
+        <button type="button" class="btn btn-CrearAsignacion" id="btnAbrirModalAsignacion">
+            Crear Asignación
+        </button>
+    </div>
+</div>
+
+<div class="contenedor-filtros-panel">
+    <div class="filtros-panel">
+        <input type="text"
+               id="inputBusquedaGlobal"
+               class="filtro-input"
+               placeholder="Buscar por proyecto, descripción o responsable…">
+    </div>
+</div>
+
+
+<div class="contenedor-pagina-asignacion">
+
+    <div class="catalogoDeAsignaciones">
+        <table class="tabla-proyectos" id="tablaAsignaciones">
+            <thead>
+                <tr>
+                    <th>Nombre del Proyecto o Actividad</th>
+                    <th>Descripción</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Responsables</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.AsignacionesRealizadas != null)
+                {
+                    @foreach (var asignacion in Model.AsignacionesRealizadas)
+                    {
+                        <tr>
+                            <td><strong>@(asignacion.NombreProyecto ?? "Actividad General")</strong></td>
+                            <td>@asignacion.Descripcion</td>
+                            <td>@asignacion.FechaInicio.ToString("dd/MM/yyyy")</td>
+                            <td>@asignacion.FechaFin?.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <button type="button" class="btn-ver-responsables" data-id="@asignacion.IdAsignacion">
+                                    <i class="bi bi-eye"></i> Ver Responsables
+                                </button>
+                            </td>
+                            <td>
+                                <div class="acciones-container">
+                                    <button type="button" class="btn-tabla btn-editar-tabla" title="Editar"
+                                            onclick="abrirModalEditarAsignacion(@asignacion.IdAsignacion)">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button class="btn-tabla btn-eliminar-tabla" title="Eliminar" onclick="confirmarEliminar(@asignacion.IdAsignacion)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@* MODAL PARA CREAR UNA ASIGNACION *@
+
+<div class="contendor-modal" id="modalAsignacion" tabindex="-1" aria-labelledby="modalAsignacionLabel" aria-hidden="true">
+    <div class="modal shadow-lg">
+
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Nueva Asignación de Recurso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+
+            <div class="modal-body p-4">
+
+                <form id="formAsignacion" asp-action="CrearAsignacion" asp-controller="Asignacion" method="post">
+
+                    <div class="asignacion-grid-container">
+
+                        <div class="columna-configuracion">
+
+                            <div class="form form-ProyectoRecursos mb-3">
+                                <div class="contenedor-inputProyecto">
+                                    <label for="proyecto" class="form-label fw-bold">Proyecto</label>
+                                    <input type="text" class="form-control" id="proyecto" name="IdProyecto" placeholder="Ej: OculusProyect" required value="10">
+                                </div>
+                            </div>
+
+                            <div class="form form-Fechas mb-3">
+                                <label for="fechaRango" class="form-label fw-bold">Periodo de Asignación</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white">
+                                        <i class="bi bi-calendar3"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" id="fechaRango" placeholder="Selecciona fechas..." readonly>
+                                </div>
+                                <input type="hidden" id="fechaInicio" name="FechaInicio">
+                                <input type="hidden" id="fechaFin" name="FechaFin">
+                            </div>
+
+                            <div class="form form-Responsable mb-3">
+                                <label for="responsable" class="form-label fw-bold">Añadir Usuarios Responsables</label>
+                                <div class="input-SeleccionarResponsable">
+                                    <select id="selectResponsable" class="form-select mb-2">
+
+                                        <option value="" selected disabled>Selecciona un usuario para añadir...</option>
+
+                                        @foreach (var item in Model.Responsables)
+                                        {
+                                            <option value="@item.Value">@item.Text</option>
+                                        }
+                                    </select>
+                                    <button type="button" class="btn btn-primary w-100" onclick="agregarTarjetaUsuario()">+ Añadir Usuario</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="columna-tarjetas">
+                            <div class="header-usuarios-dinamico">
+                                <h6>USUARIOS ASIGNADOS (<span id="contadorUsuarios">0</span>)</h6>
+                                <div class="controles-carrusel">
+                                    <button type="button" class="btn-nav" id="prevBtn" onclick="moverCarrusel(-1)" disabled>
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+                                    <div id="indicadorPaginas" class="small fw-bold mx-2">Página 1 de 1</div>
+                                    <button type="button" class="btn-nav" id="nextBtn" onclick="moverCarrusel(1)" disabled>
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="viewport-carrusel">
+                                <div id="contenedorChips" class="cards-display-grid">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div style="display:none;">
+                        <select id="recursoPlantilla" asp-items="Model.RecursosDisponibles">
+                            <option selected disabled value="">Selecciona un recurso...</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-cerrarModalAsignar" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-guardarAsignacion px-5" id="btnGuardarAsignacion">Guardar Asignación</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="tempTarjetaUsuario">
+    <div class="col-md-6 mb-3 tarjeta-dinamica">
+        <div class="user-card-premium">
+            <div class="card-body">
+                <div class="content-card-header">
+                    <div class="card">
+                        <div class="Avatar-Nombre">
+                            <div class="Contenedor-Avatar">
+                                <img src="/images/user.png" class="rounded-circle" width="40" height="40">
+                            </div>
+
+                            <div class="Contenedor-Nombre">
+                                <span class="nombre-usuario"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <button type="button" class="btn-close-card">&times;</button>
+                </div>
+
+                <div>
+                    <label class="small fw-bold text-muted text-uppercase">Asignar Recurso</label>
+                    <div class="input-group input-group-sm">
+                        <select class="form-select select-recurso-interno"></select>
+                        <button class="btn-añadir-recurso" type="button">Añadir</button>
+                    </div>
+                </div>
+
+                <div class="contenedor-pills-recursos d-flex flex-wrap gap-2 mt-2"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+
+
+@* MODAL PARA VER LA INFORMACIÓN DEL RESPONSABLE *@
+
+<div class="contendor-modal" id="modalVerResponsables" style="display: none;">
+    <div class="modal-contenido">
+        <div class="modal-header">
+            <h5 class="modal-title">Detalle de Responsables</h5>
+            <button type="button" class="btn-close" id="btnCerrarVer">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="lista-responsables">
+                <span class="label">Usuarios Responsables:</span>
+                <div class="contenedor-infoUsuario"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-cerrarModalAsignar" id="btnCerrarFooterVer">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+
+
+@* Modal Eliminar Asigancion *@
+
+<div id="modalConfirmarEliminar" class="modal-confirm-container">
+    <div class="modal-confirm-content">
+        <div class="modal-confirm-border-top"></div>
+        <div class="modal-confirm-body">
+            <div class="icon-warning">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            </div>
+            <h2>¿Eliminar asignación?</h2>
+            <p>Estás a punto de eliminar esta asignación. Esta acción no se puede deshacer.</p>
+
+            <div class="modal-confirm-buttons">
+                <button type="button" class="btn-cancelar" onclick="cerrarModalEliminar()">Cancelar</button>
+                <button type="button" class="btn-eliminar-confirmar" id="btnConfirmarEliminarFinal">Sí, eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toastContainer" class="toast-container"></div>
+
+
+@section Scripts {
+
+    <script>
+        window.success = '@Html.Raw(TempData["Success"])';
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/js/Acciones_Asignacion/Modales/Toast-MensajesInfo.js"></script>
+    <script src="~/js/Acciones_Asignacion/Paginado.js"></script>
+    <script src="~/js/Acciones_Asignacion/Modales/ModalCrearAsignacion.js"></script>
+    <script src="~/js/Acciones_Asignacion/Modales/ModalinformacionResponsableAsignacion.js"></script>
+    <script src="~/js/Acciones_Asignacion/Modales/ModalAsignarMasResponsables.js"></script>
+    <script src="~/js/Acciones_Asignacion/Modales/ModalEliminarAsignacion.js"></script>
+    <script src="~/js/Acciones_Asignacion/Modales/ModalEditarAsignacion.js"></script>
+    }
+

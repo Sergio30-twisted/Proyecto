@@ -1,0 +1,218 @@
+﻿@using ACTI_AssetManager_Project.Models.Recursos
+@model RecursoFormViewModel
+@{
+    bool esEditar = (Model != null && Model.IdRecurso > 0);
+
+    ViewData["Title"] = esEditar ? "Editar Recurso" : "Nuevo Recurso";
+    Layout = "_Layout";
+    string accionForm = esEditar ? "Editar" : "Crear";
+}
+
+@* Link de css *@
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/recursos.css" />
+
+}
+
+@* Esta la vista donde esta el formulario para un agregar un nuevo registro *@
+
+<div class="recursos-page">
+
+    <div class="seccion-header">
+
+        <h1 class="seccion-titulo">
+
+            @ViewData["Title"]
+
+        </h1>
+
+        <a asp-action="Index" class="btn-accion btn-limpiar">← Volver al listado</a>
+
+    </div>
+
+    <div class="form-card">
+
+        @if (esEditar)
+        {
+            <div class="contenedor-botones_Liberar_Mantenimiento">
+
+                @if (!string.IsNullOrEmpty(Model.IdUsuarioResponsable))
+                {
+
+                    <form asp-action="Liberar" method="post">
+
+                        <input type="hidden" name="idRecurso" value="@Model.IdRecurso" />
+
+                        <button type="submit" class="btn-liberar">
+                            Liberar Recursos
+                        </button>
+                    </form>
+                }
+
+                @if (Model.IdTipoRecurso == 1 || Model.IdTipoRecurso == 2)
+                {
+                    <form asp-action="PonerEnMantenimiento" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="idRecurso" value="@Model.IdRecurso" />
+
+                        <button type="submit" class="btn-DarMantenimiento">
+                            Dar en Mantenimiento
+                        </button>
+                    </form>
+
+                }
+            </div>
+
+        }
+
+        <p style="color:red;">DEBUG: La acción es [@(accionForm ?? "ES NULA")]</p>
+        <p style="color:blue;">DEBUG: El ID es [@(Model?.IdRecurso.ToString() ?? "MODELO NULO")]</p>
+
+        <form asp-action="@accionForm" method="post" novalidate>
+            @Html.AntiForgeryToken()
+
+            @* Campo oculto para edición *@
+            @if (esEditar)
+            {
+                <input type="hidden" asp-for="IdRecurso" />
+            }
+
+            @* Errores globales *@
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ContainsKey("Error"))
+            {
+                <div class="alert alert-error">
+                    @ViewData.ModelState["Error"]?.Errors.FirstOrDefault()?.ErrorMessage
+                </div>
+            }
+
+            <div class="form-grid">
+
+                @* Código Interno *@
+                <div class="form-grupo">
+                    <label asp-for="CodigoInterno" class="form-label"></label>
+
+                    @* Aquí por medio del asp-for accedemos a la propiedad CodigoInterno del RecursoFormViewModel 
+                        Si en esta propiedad se detecta un error (Errors.Any), damos un valor true, y a la clase del input
+                        se le agrega el nombre "input-error" : "" y si no, pues no se le agrega nada.
+
+                    Errors.Any() dice hay algo aquí adentro?, si lo hay regresa true y si no regresa false
+
+                    *@
+
+                    <input asp-for="CodigoInterno"
+                           class="form-input @(ViewContext.ModelState.GetFieldValidationState("CodigoInterno") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "input-error" : "")"
+                           placeholder="Ej. ACTI-PC-001" />
+
+
+                    @* Esto si ve que una regla de dominio no se cumple, muestra el mensaje de esa regla *@
+                    <span asp-validation-for="CodigoInterno" class="form-validacion"></span>
+                </div>
+
+                @* Tipo de Recurso *@
+                <div class="form-grupo">
+                    <label asp-for="IdTipoRecurso" class="form-label"></label>
+
+                    <select asp-for="IdTipoRecurso"
+                            class="form-input @(ViewContext.ModelState.GetFieldValidationState("IdTipoRecurso") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "input-error" : "")">
+                        <option value="">— Selecciona un tipo —</option>
+                        @if (Model.TiposConCategoria != null && Model.TiposConCategoria.Any())
+                        {
+                            @foreach (var item in Model.TiposConCategoria)
+                            {
+                                <option value="@item.Value"
+                                        data-categoria="@item.Group?.Name"
+                                        selected="@(Model.IdTipoRecurso != 0 && item.Value == Model.IdTipoRecurso.ToString())">
+                                    @item.Text
+                                </option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="">No se encontraron tipos de recurso</option>
+                        }
+                    </select>
+
+                    <span asp-validation-for="IdTipoRecurso" class="form-validacion"></span>
+                </div>
+
+
+
+                @if (esEditar)
+                {
+                    <div class="form-grupo">
+                        <label asp-for="IdUsuarioResponsable" class="form-label">Responsable del Recurso</label>
+                        <select asp-for="IdUsuarioResponsable"
+                                asp-items="ViewBag.Usuarios"
+                                class="form-input @(ViewContext.ModelState.GetFieldValidationState("IdUsuarioResponsable") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "input-error" : "")">
+                            <option value="">— Sin responsable asignado —</option>
+                        </select>
+                        <span asp-validation-for="IdUsuarioResponsable" class="form-validacion"></span>
+                    </div>
+                }
+
+
+                @* Capacidad de Uso *@
+                <div class="form-grupo">
+                    <label asp-for="CapacidadUso" class="form-label">Capacidad de Uso</label>
+
+                    <div class="input-con-opcion">
+                        <input asp-for="CapacidadUso"
+                               type="number"
+                               id="inputCapacidad"
+                               class="form-input @(ViewContext.ModelState.GetFieldValidationState("CapacidadUso") == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Invalid ? "input-error" : "")"
+                               placeholder="Ej. 50" 
+                               />
+
+                        <div class="checkbox-opcion">
+                            <label for="chkNoCapacidad" class="label-lite">No incluir capacidad de uso</label>
+                            <input type="checkbox" id="chkNoCapacidad" @(Model.CapacidadUso == null ? "checked" : "") />
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="CapacidadUso" class="form-validacion"></span>
+                </div>
+
+
+
+                @* Fecha de Adquisición *@
+                <div class="form-grupo">
+
+                    <label asp-for="FechaAdquisicion" class="form-label"></label>
+
+                    <input asp-for="FechaAdquisicion"
+                           type="date"
+                           class="form-input @(ViewData.ModelState["FechaAdquisicion"]?.Errors.Any() == true ? "input-error" : "")" />
+
+                    <span asp-validation-for="FechaAdquisicion" class="form-validacion"></span>
+
+                </div>
+
+                @* Vigencia (opcional) *@
+                <div class="form-grupo" id="contenedor-vigencia">
+                    <label asp-for="Vigencia" class="form-label vigencia">
+                        Vigencia <span class="label-opcional">(opcional, solo licencias/cuentas)</span>
+                    </label>
+                    <input asp-for="Vigencia" type="date" class="form-input" />
+                    <span asp-validation-for="Vigencia" class="form-validacion"></span>
+                </div>
+
+            </div>
+
+            <div class="form-acciones">
+                <button type="submit" class="btn-accion btn-nuevo">
+                    @(esEditar ? "Guardar cambios" : "Crear recurso")
+                </button>
+                <a asp-action="Index" class="btn-accion btn-limpiar">Cancelar</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script src="~/js/Acciones_Recursos/recursos.js" asp-append-version="true"></script>
+
+}

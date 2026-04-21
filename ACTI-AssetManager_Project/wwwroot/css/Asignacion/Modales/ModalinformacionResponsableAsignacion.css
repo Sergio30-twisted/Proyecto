@@ -1,0 +1,97 @@
+﻿.lista-responsables {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 20px;
+}
+
+.responsable-card {
+    background-color: #f8fafc;
+    border-left: 4px solid #4facfe; /* Línea azul de tu marca */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+    .responsable-card .info {
+        margin-bottom: 5px;
+    }
+
+    .responsable-card .label {
+        font-weight: 700;
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+
+    .responsable-card .valor {
+        color: #1e293b;
+        font-weight: 600;
+    }
+
+.badge-recurso {
+    width:10%;
+    text-align:center;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.contenedor-infoUsuario {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.FotoUser-Nombre-Recurso {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+    .FotoUser-Nombre-Recurso:last-child {
+        border-bottom: none;
+    }
+
+.foto {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Espacio entre cada foto */
+}
+
+    .foto img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+
+.nombre {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* DEBE SER IGUAL AL GAP DE .foto PARA ALINEACIÓN */
+    justify-content: flex-start;
+}
+
+    .nombre .valor {
+        height: 40px; /* DEBE SER IGUAL AL HEIGHT DE LA IMG PARA CENTRADO VERTICAL */
+        display: flex;
+        align-items: center;
+        margin: 0;
+        font-weight: 600;
+        color: #334155;
+    }
+
+.recurso .badge-recurso {
+    background-color: #e0f2fe; /* Azul clarito */
+    color: #0369a1; /* Azul fuerte para el texto */
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}

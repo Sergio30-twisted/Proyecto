@@ -1,0 +1,83 @@
+﻿@model AuthViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null; ; // o null si no quieres layout
+}
+
+
+<link rel="stylesheet" href="~/css/login.css" />
+<link rel="icon" type="image/x-icon" href="~/logo.ico" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="screen">
+
+
+    <div class="left-panel">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="error-toast-container">
+                <div class="error-toast">
+
+                    <span class="error-icon--container">
+                        @*/la virgulilla (~), que es el operador de ASP.NET para referenciar siempre la raíz de la carpeta wwwroot./ *@
+                        <div class="error-icon--img"></div>
+                    </span>
+
+                    <div class="error-text">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <span style="display: block;">@error.ErrorMessage</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        <canvas id="nodes"></canvas>
+    </div>
+
+    <div class="login-container">
+        <div class="login-area">
+
+            <img src="~/images/logo.png" alt="Logo" class="login-logo">
+
+            <div class="login-box">
+                <div class="top-shape"></div>
+
+
+                <div class="login-card">
+                    <h1>BIENVENIDO</h1>
+                    <p class="subtitle">AssetManager</p>
+
+                    <form asp-controller="Auth" asp-action="Login" method="post">
+
+                        <div class="input-group">
+                            <label>Usuario</label>
+                            <input asp-for="Username" />
+                            <span asp-validation-for="Username"></span>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Contraseña</label>
+                            <input asp-for="Password" type="password" />
+                            <span asp-validation-for="Password"></span>
+                        </div>
+
+                        <div class="options">
+                            <a href="#">Recuperar Contraseña</a>
+                        </div>
+
+                        <button type="submit">INGRESAR</button>
+
+                    </form>
+
+                    <p class="register">
+                        No tienes cuenta <a href="#">Regístrate</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/js/login.js"></script>

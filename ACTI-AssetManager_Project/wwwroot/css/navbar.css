@@ -1,0 +1,213 @@
+﻿/* ===================================================
+    0. RESET BASE
+   =================================================== */
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ===================================================
+    1. HEADER 
+   =================================================== */
+header {
+    width: 100%;
+    min-height: 75px; /* Ajuste ligero para dar aire al diseño */
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #4facfe; /* Línea de acento cian */
+    box-sizing: border-box;
+    padding: 0 30px;
+    position: relative; /* Base para el posicionamiento absoluto del canvas */
+    overflow: visible; /* IMPORTANTE: Permitir que el dropdown sea visible fuera del header */
+    z-index: 100;
+}
+
+/* ===================================================
+    2. CONTENEDOR DE LOS NODOS
+   =================================================== */
+#canvas-nodos {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Al fondo del header */
+    pointer-events: none; /* Crucial: los clics "atraviesan" el canvas hacia los links */
+    opacity: 0.8;
+    display: block;
+}
+
+/* ===================================================
+    3. ELEMENTOS DE CONTENIDO 
+   =================================================== */
+.logo-link,
+.container-option,
+.user-menu-container {
+    position: relative;
+    z-index: 10; /* Por encima de los nodos para recibir clics */
+}
+
+.user-menu-container {
+    z-index: 1000; /* El dropdown debe flotar sobre el contenido de la página */
+}
+
+/* ===================================================
+    4. LOGO
+   =================================================== */
+.logo {
+    width: 110px;
+    height: 55px;
+    background-image: url("/images/logo.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo {
+    transform: scale(1.05);
+}
+
+/* ===================================================
+    5. NAVEGACIÓN 
+   =================================================== */
+.container-option {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+    .container-option ul {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-option a {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 13.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        transition: all 0.3s ease;
+        opacity: 0.9;
+    }
+
+        .container-option a:hover {
+            transform: translateY(-2px);
+            color: #4facfe; /* Color cian al pasar el mouse */
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(79, 172, 254, 0.4);
+        }
+
+/* ===================================================
+    6. MENÚ DE USUARIO (ICONO Y NOMBRE)
+   =================================================== */
+.menu-container--iconAndName {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 18px;
+    background: rgba(255, 255, 255, 0.08); /* Efecto cristal sutil */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+    .menu-container--iconAndName:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(79, 172, 254, 0.5);
+    }
+
+.user-avatar-circle {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+}
+
+#userNameDisplay {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+}
+
+/* ===================================================
+    7. DROPDOWN (LOGOUT)
+   =================================================== */
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background-color: #1e293b;
+    min-width: 190px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    border-radius: 10px;
+    border: 1px solid rgba(79, 172, 254, 0.2);
+    overflow: hidden;
+}
+
+    .dropdown-content.show {
+        display: block;
+        animation: fadeInDropdown 0.25s ease-out;
+    }
+
+/* ===================================================
+    DISEÑO DEL BOTÓN DEL LOGOUT
+   =================================================== */
+
+
+.btn-logout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+    .btn-logout a {
+        width: 100%;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        font-weight: 500;
+        color: #ff4d4d;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        transition: all 0.3s ease;
+        background: transparent;
+    }
+
+        .btn-logout a:hover {
+            color: #ff3333;
+            background-color: rgba(231, 32, 78, 0.12);
+        }
+
+
+@keyframes fadeInDropdown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

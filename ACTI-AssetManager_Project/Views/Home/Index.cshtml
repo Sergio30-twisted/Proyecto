@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Menú Principal";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" />
+}
+
+@* Banner con Nodos *@
+<div class="container-nodos">
+    <canvas id="canvas-home" class="red-nodos"></canvas>
+</div>
+
+@* Grid de Recuadros *@
+<div class="container-home--options">
+
+    <a asp-controller="Recursos" asp-action="Index" class="home-options home-options--recursos">
+        <div class="home-options--text recursos-text"></div>
+    </a>
+
+    <a asp-controller="Proyecto" asp-action="Index" class="home-options home-options--proyecto">
+        <div class="home-options--text proyecto-text"></div>
+    </a>
+
+    <a asp-controller="Mantenimiento" asp-action="Index" class="home-options home-options--mantenimiento">
+        <div class="home-options--text mantenimiento-text"></div>
+    </a>
+
+    <a asp-controller="Licencia" asp-action="Index" class="home-options home-options--licencia">
+        <div class="home-options--text licencia-text"></div>
+    </a>
+
+    <a asp-controller="Asignacion" asp-action="Index" class="home-options home-options--asignacion">
+        <div class="home-options--text asignacion-text"></div>
+    </a>
+
+    <a asp-controller="Alerta" asp-action="Index" class="home-options home-options--alerta">
+        <div class="home-options--text alerta-text"></div>
+    </a>
+
+</div>

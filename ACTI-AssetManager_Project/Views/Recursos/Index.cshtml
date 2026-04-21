@@ -1,0 +1,453 @@
+﻿@using System.Security.Claims
+@using ACTI_AssetManager_Project.Models.Recursos
+@model RecursoListViewModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "Recursos";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/recursos.css" />
+    <link rel="stylesheet" href="~/css/ModalCrearNuevoTipoRecurso.css" />
+    <link rel="stylesheet" href="~/css/ModalEditarNuevoTipoRecurso.css" />
+}
+
+
+
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-error">
+        <i class="fas fa-exclamation-triangle"></i> @TempData["Error"]
+    </div>
+}
+
+<div class="recursos-page">
+
+
+
+    @* Encabezado de sección *@
+    <div class="seccion-header">
+        <h1 class="seccion-titulo">
+
+            Inventario de Recursos
+        </h1>
+
+    </div>
+
+    <div class="contenedor-btnModalCrearTipoRecurso">
+        <a asp-action="GetTipoRecurso" class="btn-accion btn-nuevo">
+            + Nuevo Recurso
+        </a>
+        <button type="button" class="btn btn-modalCrearTipoRecurso">
+            + Crear Un Nuevo Tipo De Recurso
+        </button>
+    </div>
+
+
+    @* Notificaciones TempData *@
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert alert-exito">@TempData["Exito"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-error">@TempData["Error"]</div>
+    }
+
+    @* Panel de filtros *@
+    <form method="get" asp-action="Index" class="filtros-panel">
+        <div class="filtros-grupo">
+
+            <input type="text"
+                   name="filtroCodigo"
+                   value="@Model.FiltroCodigo"
+                   placeholder="Buscar por código o responsable…"
+                   class="filtro-input" />
+
+            @* --- Grupo de Botones para Tipos de Recurso --- *@
+            <div class="filtros-categorias-container">
+                <input type="hidden" name="filtroTipo" id="hdn-filtroTipo" value="@Model.FiltroTipo" />
+
+
+
+                <div class="chips-grid">
+                    @* Botón para mostrar todos *@
+                    <button type="button"
+                            class="chip-button @(Model.FiltroTipo == null ? "active" : "")"
+                            onclick="aplicarFiltroGeneral('hdn-filtroTipo', '')">
+                        <span class="chip-text">Todos</span>
+                    </button>
+
+                    @foreach (var tipo in Model.Tipos)
+                    {
+                        // Lógica para asignar el icono según el nombre que viene de BD
+                        string icono = tipo.Text.Trim().ToLower() switch
+                        {
+                            "equipos de computo" => "Iconpc.png",
+                            "servidores" => "Iconserver.png",
+                            "licencias" => "Iconlicence.png",
+                            "cuentas" => "Iconcredential.png",
+                            _ => "default.png"
+                        };
+
+                        <button type="button"
+                                class="chip-button chip-estado-foco"
+                                data-id-tipo="@tipo.Value"
+                                data-nombre="@tipo.Text"
+                                data-id-categoria="@(tipo.Group?.Name ?? "1")"
+                                onclick="aplicarFiltroGeneral('hdn-filtroTipo', '@tipo.Value')">
+
+                            <img src="~/icons/@icono" alt="@tipo.Text" class="chip-icon" />
+                            <span class="chip-text">@tipo.Text</span>
+                        </button>
+
+
+                    }
+                    @* Boton modal editar tipo recursos*@
+
+                    <div id="overlayEdicion" class="overlay-oscuro"></div>
+
+                    <button type="button" id="btnModoEdicion" class="btn-circular-opciones">
+                        ...
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="contenedor-label-filtros-estados">
+                <label class="seccion-label">Filtrar por Estado:</label>
+            </div>
+
+            <div class="contenedor-filtros-estados">
+                <input type="hidden" name="filtroEstado" id="hdn-filtroEstado" value="@Model.FiltroEstado" />
+
+                <div class="chips-grid-estados">
+                    @* Botón Todos *@
+                    <button type="button"
+                            class="btn-todos-FiltroEstado chip-estado @(Model.FiltroEstado == null ? "active" : "")"
+                            onclick="aplicarFiltroGeneral('hdn-filtroEstado','')">
+                        Todos
+                    </button>
+
+
+
+                    @foreach (var estado in Model.Estados)
+                    {
+
+                        int IdEstado = int.Parse(estado.Value);
+                        // Asignamos una clase de color según el texto del estado
+                        string claseColor = IdEstado switch
+                        {
+                            1 => "color-vigente",
+                            2 => "color-alerta",
+                            3 => "color-peligro",
+                            4 => "color-enuso",
+                            5 => "color-disponible",
+                            6 => "color-mantenimiento",
+                            _ => "color-default"
+
+
+                        };
+
+                        <button type="button"
+                                class="chip-estado @claseColor @(estado.Value == Model.FiltroEstado?.ToString() ? "active" : "")"
+                                onclick="aplicarFiltroGeneral('hdn-filtroEstado', '@estado.Value')">
+                            <span class="punto-indicador"></span>
+                            @estado.Text
+                        </button>
+                    }
+
+                </div>
+            </div>
+
+            <div class="contenedor-botones-FiltroRecursos">
+                <button type="submit" class="btn-accion btn-filtrar">Filtrar</button>
+                <a asp-action="Index" class="btn-accion btn-limpiar">Limpiar</a>
+            </div>
+
+
+
+        </div>
+    </form>
+
+    @* Tabla de resultados *@
+    <div class="tabla-wrapper">
+        <table class="tabla-recursos" id="tabla-inventario">
+            <thead>
+                <tr>
+                    <th>Código Interno</th>
+                    <th rowspan="2">Tipo</th>
+                    <th>Estado</th>
+                    <th>Adquisición</th>
+                    <th>Vigencia</th>
+                    <th>Responsable</th>
+                    <th rowspan="3" class="col-acciones">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Recursos.Any())
+                {
+                    <tr>
+                        <td colspan="7" class="sin-resultados">No se encontraron recursos.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var r in Model.Recursos)
+                    {
+                        <tr>
+                            <td><strong>@r.CodigoInterno</strong></td>
+
+                            <td>
+                                <div class="tipo-recurso-container">
+
+                                    @{
+                                        // Definimos la ruta de la imagen según el texto que llega de la BD
+                                        string nombreIcono = r.TipoRecurso?.Trim().ToLower() switch
+                                        {
+                                            "equipos de computo" => "Iconpc.png",
+                                            "servidores" => "Iconserver.png",
+                                            "licencias" => "Iconlicence.png",
+                                            "cuentas" => "Iconcredential.png",
+                                            "mantenimiento" => "Iconcredential.png",
+                                            _ => "IconDefault.png"
+                                        };
+                                    }
+
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <img src="~/icons/@nombreIcono" alt="Icono" style="width: 24px; height: 24px; object-fit: contain;" />
+                                        <span class="tipo-texto">@r.TipoRecurso</span>
+                                    </div>
+                                </div>
+                            </td>
+
+
+                            <td>
+                                <span class="badge @r.CssEstado">
+                                    @r.NombreEstado (ID: @r.IdEstado)
+                                </span>
+                            </td>
+
+
+                            <td>@r.FechaAdquisicion</td>
+
+                            <td>@r.Vigencia</td>
+
+                            <td class="col-asignarResponsable" id="celda-responsable-@r.IdRecurso">
+
+                               @* Pendiente *@
+                                @* _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_- *@
+
+                            </td>
+
+                            <td class="col-acciones">
+
+                                <a asp-action="Editar"
+                                   asp-route-id="@r.IdRecurso"
+                                   class="btn-accion btn-editar">
+                                    Editar
+                                </a>
+                                <form asp-action="Eliminar" method="post" style="display:inline;"
+                                      class="form-eliminar"
+                                      id="form-eliminar-@r.IdRecurso"
+                                      data-nombre="@r.IdRecurso">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@r.IdRecurso" />
+                                    <button type="button" class="btn-accion btn-eliminar"
+                                            onclick="abrirModalEliminar('@r.IdRecurso','@r.CodigoInterno')">
+                                        Eliminar
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.TotalPaginas > 1)
+    {
+        <div class="paginacion-container">
+            <nav aria-label="Paginación de inventario">
+                <ul class="paginacion-lista">
+
+                    @* Botón Anterior *@
+                    <li class="paginacion-item @(!Model.TienePaginaAnterior ? "disabled" : "")">
+                        <a asp-action="Index"
+                           asp-route-pagina="@(Model.PaginaActual - 1)"
+                           asp-route-filtroCodigo="@Model.FiltroCodigo"
+                           asp-route-filtroTipo="@Model.FiltroTipo"
+                           asp-route-filtroEstado="@Model.FiltroEstado"
+                           class="paginacion-link">« Anterior</a>
+                    </li>
+
+                    @* Números de página *@
+                    @for (int i = 1; i <= Model.TotalPaginas; i++)
+                    {
+                        <li class="paginacion-item @(i == Model.PaginaActual ? "active" : "")">
+                            <a asp-action="Index"
+                               asp-route-pagina="@i"
+                               asp-route-filtroCodigo="@Model.FiltroCodigo"
+                               asp-route-filtroTipo="@Model.FiltroTipo"
+                               asp-route-filtroEstado="@Model.FiltroEstado"
+                               class="paginacion-link">@i</a>
+                        </li>
+                    }
+
+                    @* Botón Siguiente *@
+                    <li class="paginacion-item @(!Model.TienePaginaSiguiente ? "disabled" : "")">
+                        <a asp-action="Index"
+                           asp-route-pagina="@(Model.PaginaActual + 1)"
+                           asp-route-filtroCodigo="@Model.FiltroCodigo"
+                           asp-route-filtroTipo="@Model.FiltroTipo"
+                           asp-route-filtroEstado="@Model.FiltroEstado"
+                           class="paginacion-link">Siguiente »</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+
+</div>
+
+@* MODALES *@
+
+@* Modal Para Asignar Responsable de Recursos *@
+
+<div id="modal-AsignarResponsable" class="contenedor-modal" style="display:none;">
+    <div class="modal-contenido">
+        <div class="modal-header-shape"></div> @* Opcional: para mantener el estilo visual *@
+        <h3>Asignar Responsable</h3>
+        <p>Selecciona al usuario que se hará cargo de este recurso.</p>
+
+        <input type="hidden" id="hdn-IdRecurso-Asig">
+
+        <input type="hidden" id="hdn-UsuarioLogueado" value="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value" />
+
+        <div class="form-grupo">
+            <label>Usuario Responsable</label>
+            <select id="select-UsuarioResponsable" class="form-input">
+                <option value="">-- Selecciona un Usuario (@Model.Responsables.Count()) --</option>
+                @foreach (var res in Model.Responsables)
+                {
+                    <option value="@res.Value">@res.Text</option>
+                }
+            </select>
+        </div>
+
+        <div class="modal-botones">
+            <button type="button" class="btn-cancelar" onclick="CerrarModalAsignar()">Cancelar</button>
+            <button type="button" class="btn-guardar" onclick="GuardarAsignacion()">Confirmar Asignación</button>
+        </div>  
+    </div>
+</div>
+
+
+
+@* Modal de confirmación de eliminación *@
+<div id="modal-eliminar" class="modal-overlay" style="display:none;">
+    <div class="modal-card">
+        <div class="modal-top-shape"></div>
+        <div class="modal-body">
+            <div class="modal-icon">⚠️</div>
+            <h2 class="modal-titulo">¿Eliminar recurso?</h2>
+            <p class="modal-mensaje">Estás a punto de eliminar <strong id="modal-nombre-recurso"></strong>. Esta acción no se puede deshacer.</p>
+            <div class="modal-acciones">
+                <button class="btn-modal btn-modal-cancelar" onclick="cerrarModalEliminar()">Cancelar</button>
+                <button class="btn-modal btn-modal-confirmar" onclick="confirmarEliminacion()">Sí, eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@* Modal para Crear Nuevo Tipo De Recurso *@
+
+<div id="modalCrearTipoRecurso" class="modal-personalizado">
+    <div class="modal-contenido">
+
+        <div class="modal-header-personalizado">
+            <h3>Ingresa el nombre del nuevo tipo de recurso</h3>
+            <button type="button" class="btn-cerrar-modal">&times;</button>
+        </div>
+
+        <form asp-action="CrearTipoRecurso" asp-controller="Recursos" method="post">
+            <div class="modal-body-personalizado">
+
+                <div class="campo-formulario">
+                    <label>Nombre del Tipo</label>
+                    <input type="text" name="Nombre" placeholder="Ej. PlayStation" required />
+                </div>
+
+                <div class="campo-formulario">
+                    <label>Categoría (Naturaleza)</label>
+                    <select name="IdCategoria" class="form-control" asp-items="ViewBag.Categorias" required>
+                        <option value="">-- Seleccione Categoría --</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="modal-footer-personalizado">
+                <button type="button" class="btn-cancelar-modal">Cancelar</button>
+                <button type="submit" class="btn-guardar-modal">Agregar tipo de recurso</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@* Modal para Editar Tipo De Recurso *@
+
+<div id="modalEditarTipoRecurso" class="overlay-modal" style="display: none;">
+    <div id="contenedor-editar-tipo" class="contenedor-modal">
+
+        <form id="formEditarTipoRecurso" class="formEditarTR">
+            <div class="cuerpo-modal">
+
+                <div class="contenedor-TituloModalEditarTR">
+                    <h3>Editar Tipo de Recurso</h3>
+                    <button type="button" class="btn-cerrar-modal" onclick="cerrarModalEdicion()">&times;</button>
+                </div>
+
+
+                <input type="hidden" id="editIdTipo" name="Id" />
+
+                <div class="grupo-formulario">
+                    <label>Nombre del Tipo</label>
+                    <input type="text" id="editNombreInput" name="Nombre" required />
+                </div>
+
+                <div class="grupo-formulario">
+                    <label>Categoría (Naturaleza)</label>
+                    <select id="editCategoriaSelect" name="IdCategoria" class="form-control" asp-items="ViewBag.Categorias" required>
+                        <option value="">-- Seleccione Categoría --</option>
+                    </select>
+                </div>
+                <div class="pie-modal">
+                    <button type="button" class="btn-cancelar-modal" onclick="cerrarModalEdicion()">Cancelar</button>
+                    <button type="submit" class="btn-guardar-modal">Guardar Cambios</button>
+                    <button type="button" class="btn-eliminar-modal" onclick="confirmarEliminarTipo()">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/Acciones_Recursos/Modales/ModalTipoRecurso/ModalCrearTipoRecurso.js"></script>
+    <script src="~/js/Acciones_Recursos/Modales/ModalTipoRecurso/ModalEditarTipoRecurso.js"></script>
+    <script src="~/js/Acciones_Recursos/Modales/ModalTipoRecurso/EliminarTipoRecurso.js"></script>
+    <script src="~/js/Acciones_Recursos/recursos.js"></script>
+}
+

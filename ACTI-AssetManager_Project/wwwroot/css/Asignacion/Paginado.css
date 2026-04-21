@@ -1,0 +1,113 @@
+﻿/* ============================================================== 
+   LIMPIEZA Y ESTRUCTURA DE DATATABLES
+   ============================================================== */
+
+/* Contenedor principal al 100% */
+#tablaAsignaciones_wrapper {
+    width: 100% !important;
+    display: block !important;
+    margin: 0 auto 20px auto;
+}
+
+/* Quitar flechas de ordenamiento */
+table.dataTable thead th.sorting::before,
+table.dataTable thead th.sorting::after,
+table.dataTable thead th.sorting_asc::before,
+table.dataTable thead th.sorting_asc::after,
+table.dataTable thead th.sorting_desc::before,
+table.dataTable thead th.sorting_desc::after {
+    display: none !important;
+}
+
+/* Estilo de encabezados */
+table.dataTable thead th {
+    padding: 15px 12px !important;
+    border-bottom: 2px solid #dee2e6 !important;
+}
+
+/* ============================================================== 
+   FOOTER DE LA TABLA (INFO Y PAGINADO CENTRADO)
+   ============================================================== */
+
+/* Contenedor del footer: Forzamos columna para centrar info y botones */
+.dataTables_wrapper .d-flex.justify-content-between {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100%;
+    margin-top: 25px !important;
+    padding: 15px 10px !important;
+    border-top: 1px solid #f1f3f5;
+    gap: 15px !important;
+}
+
+/* Texto de información centrado */
+.dataTables_info {
+    font-size: 14px !important;
+    color: #6c757d !important;
+    font-weight: 500;
+    text-align: center !important;
+    width: 100%;
+}
+
+/* ============================================================== 
+   BOTONES DE PAGINACIÓN (CENTRADOS Y PREMIUM)
+   ============================================================== */
+
+/* Contenedor del paginado: Centrado absoluto */
+.dataTables_wrapper .dataTables_paginate {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100%;
+}
+
+.dataTables_wrapper .pagination {
+    display: flex !important;
+    justify-content: center !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 8px !important;
+}
+
+    /* Eliminar estilos de lista residuales */
+    .dataTables_wrapper .pagination li {
+        list-style: none !important;
+        background: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Botones base */
+    .dataTables_wrapper .pagination .page-link {
+        background-color: #ffffff !important;
+        color: #495057 !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+        text-decoration: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+    }
+
+    /* Botón Activo */
+    .dataTables_wrapper .pagination .page-item.active .page-link {
+        background-color: #4d8aff !important;
+        border-color: #4d8aff !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 10px rgba(77, 138, 255, 0.4) !important;
+    }
+
+    /* Hover */
+    .dataTables_wrapper .pagination .page-link:hover:not(.active) {
+        background-color: #f8f9fa !important;
+        border-color: #ced4da !important;
+        transform: translateY(-1px);
+    }

@@ -1,0 +1,203 @@
+﻿/* 1. LA TARJETA PRINCIPAL (CARD) */
+.user-card-premium {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 16px; /* Bordes más suaves */
+    border: 1px solid #f1f3f5 !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    margin-top: 15px;
+}
+
+    .user-card-premium:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08) !important;
+    }
+
+.content-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* 2. ENCABEZADO: FOTO Y NOMBRE */
+.Avatar-Nombre {
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.Contenedor-Avatar img {
+    width: 40px;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.nombre-usuario {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-left: 12px;
+}
+
+/* 3. BOTÓN CERRAR (X) DE LA TARJETA */
+.btn-close-card {
+    background: #fff5f5; /* Un toque de rojo muy tenue */
+    color: #ff4757;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+}
+
+    .btn-close-card:hover {
+        background: #ff4757;
+        color: #fff;
+    }
+
+/* 4. SELECT Y BOTÓN AÑADIR (DENTRO DE LA CARD) */
+.user-card-assign label {
+    font-size: 0.8rem;
+    text-uppercase: uppercase;
+    letter-spacing: 0.5px;
+    color: #636e72;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.select-recurso-interno {
+    border-radius: 8px 0 0 8px !important;
+    border: 1px solid #dfe6e9;
+    background-color: #f8f9fa;
+    padding-left: 12px;
+}
+
+.btn-añadir-recurso {
+    /* Color: Usamos un tono 'Slate' muy oscuro en lugar de gris plano */
+    background-color: #1e293b;
+    color: #f8fafc;
+    border: none;
+    padding: 18px 24px;
+    /* Mantenemos tu estructura de esquinas para el input-group */
+    border-radius: 5px;
+    /* Tipografía refinada */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    /* Interacción */
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    /* Alineación perfecta si hay iconos */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-añadir-recurso:hover {
+        background-color: #0f172a; /* Más oscuro al pasar el mouse */
+        color: #ffffff;
+        /* Un sutil resplandor en lugar de sombra pesada */
+        box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-añadir-recurso:active {
+        transform: scale(0.96); /* Efecto de pulsación */
+    }
+
+    /*CSS PARA EL DESLIZAMIENTO DE CARTAS*/
+
+/* 5. BURBUJAS (PILLS) DE RECURSOS */
+.badge-recurso-premium {
+    background-color: #f1f2f6;
+    color: #2f3542;
+    border: 1px solid #ced4da;
+    border-radius: 8px; /* Menos circular, más "tag" */
+    padding: 6px 12px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+    .badge-recurso-premium .remover-x {
+        color: #ff4757;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+        .badge-recurso-premium .remover-x:hover {
+            color: #ff6b81;
+        }
+
+/* 6. ORDENAMIENTO DE CHIPS */
+.contenedor-pills-recursos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 15px;
+}
+
+.header-usuarios-dinamico {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.controles-carrusel {
+    display: flex;
+    align-items: center;
+}
+
+.btn-nav {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .btn-nav:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .btn-nav:not(:disabled):hover {
+        background: #0f172a;
+        color: white;
+    }
+
+.viewport-carrusel {
+    overflow: hidden; /* Oculta lo que sale del frame */
+    width: 100%;
+}
+
+#contenedorChips {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 = 4 por frame */
+    grid-template-rows: repeat(2, auto);
+    gap: 20px;
+    transition: transform 0.5s ease-in-out;
+    /* No usamos margin-left, usaremos transform para mover frames */
+}

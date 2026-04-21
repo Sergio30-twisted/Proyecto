@@ -1,0 +1,237 @@
+﻿* {
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+/* ============================================================
+   1. CAPA DE EDICIÓN (CORTINA Y FOCO)
+   ============================================================ */
+
+/* Fondo que oscurece la pantalla al activar edición */
+.overlay-oscuro {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.5); /* Azul oscuro semitransparente */
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease;
+}
+
+/* Efecto que resalta los botones de tipo de recurso al pasar el mouse */
+.chip-button {
+    position: relative;
+    z-index: 1001 !important; /* Un paso arriba del overlay-oscuro */
+    transition: all 0.2s ease;
+}
+
+/* Estado de foco intenso cuando el elemento es seleccionado para editar */
+.foco-activo {
+    position: relative !important;
+    z-index: 9999 !important;
+    background-color: white !important;
+    border: 2px solid #fffefe !important;
+    box-shadow: 0 0 25px #ffffff !important;
+    transform: scale(1.05);
+}
+
+/* ============================================================
+   2. BOTÓN DE ACTIVACIÓN (TRES PUNTOS)
+   ============================================================ */
+
+#btnModoEdicion {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10000; /* Siempre visible por encima de la cortina */
+    outline: none;
+    user-select: none;
+}
+
+    #btnModoEdicion:hover {
+        background-color: #f8fafc;
+        color: #2563eb;
+        border-color: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+
+    #btnModoEdicion.activo {
+        background: #2563eb;
+        color: #ffffff;
+        border-color: #2563eb;
+        transform: rotate(90deg);
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+    }
+
+
+/* ============================================================
+   3. MODAL DE EDICIÓN (ESTILO PREMIUM)
+   ============================================================ */
+#modalEditarTipoRecurso {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0; /* Cubre toda la pantalla (top, left, right, bottom: 0) */
+    z-index: 60000 !important; /* Por encima de TODO */
+    background: rgba(15, 23, 42, 0.2);
+    backdrop-filter: blur(6px); /* Desenfoque de fondo */
+    /* CENTRADO ABSOLUTO */
+    padding: 20px;
+}
+
+.contenedor-TituloModalEditarTR {
+    width: 100%;
+    padding-bottom:20px;
+    display:flex;
+    justify-content:space-between;
+}
+
+#contenedor-editar-tipo {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: aparecerModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.formEditarTR {
+    background-color: white;
+    width: 30%;
+    height: 50%;
+    padding: 60px;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+@keyframes aparecerModal {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* CABECERA CON ESTILO */
+.cabecera-modal {
+    padding: 24px 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .cabecera-modal h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.025em;
+    }
+
+/* FORMULARIO Y CAMPOS */
+
+.grupo-formulario {
+    margin-bottom: 24px;
+}
+
+    .grupo-formulario label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+    }
+
+    .grupo-formulario input,
+    .grupo-formulario select {
+        width: 100%;
+        height: 48px; /* Altura fija para consistencia */
+        padding: 0 16px;
+        background-color: #f8fafc;
+        border: 2px solid #f1f5f9;
+        border-radius: 12px;
+        font-size: 1rem;
+        color: #1e293b;
+        box-sizing: border-box; /* IMPORTANTE: evita que se desborde */
+        transition: all 0.2s ease;
+    }
+
+        .grupo-formulario input:focus {
+            outline: none;
+            background-color: #ffffff;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+/* PIE DE PÁGINA */
+.pie-modal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top:50px;
+}
+
+.btn-cancelar-modal {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: none;
+    height: 48px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-guardar-modal {
+    background: #0f172a; /* Color oscuro elegante */
+    color: #ffffff;
+    border: none;
+    height: 48px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+}
+
+    .btn-guardar-modal:hover {
+        background: #1e293b;
+        transform: translateY(-2px);
+    }
+
+.btn-cancelar-modal:hover {
+    background: #dde6eb;
+    transform: translateY(-2px);
+}

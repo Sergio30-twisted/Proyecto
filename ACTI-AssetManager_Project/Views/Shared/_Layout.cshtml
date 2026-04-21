@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @* Usamos ~/ para que ASP.NET encuentre el CSS desde wwwroot *@
+    <link rel="stylesheet" href="~/css/navbar.css">
+    <link rel="icon" href="~/logo.ico">
+
+
+    @* --- AGREGA ESTA LÍNEA AQUÍ --- *@
+    @await RenderSectionAsync("Styles", required: false)
+
+    <title>@ViewData["Title"] - ACTI Asset Manager</title>
+
+</head>
+<body>
+
+
+    @* PASO CLAVE: Aquí inyectamos el Header reutilizable *@
+    <partial name="_navbar" />
+
+    @* Aquí se inyectará el contenido de cada página (como tus recuadros) *@
+    @RenderBody()
+
+    @* Scripts globales *@
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="~/js/node-menu.js"></script>
+    <script src="~/js/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    @* Este es el que da los efectos de diseños buenos *@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,240 @@
+﻿/* --- RESET Y TIPOGRAFÍA --- */
+* {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* --- MODAL Y FONDO --- */
+.contendor-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.5); /* Color más oscuro y profundo */
+    backdrop-filter: blur(0px);
+    transition: all 0.4s ease;
+    display: none;
+    z-index: 1050;
+    align-items: center;
+    justify-content: center;
+}
+
+    .contendor-modal.show {
+        display: flex;
+        backdrop-filter: blur(8px);
+    }
+
+/* Caja de diálogo */
+.modal {
+    width: 95%;
+    max-width: 1900px; /* Ancho máximo para pantallas grandes */
+    pointer-events: auto;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contendor-modal.show .modal {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-contenido {
+    width:100%;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* --- ENCABEZADO --- */
+.modal-header {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .modal-header h5 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+/* --- CUERPO Y GRID DE DISTRIBUCIÓN --- */
+.modal-body {
+    padding: 2.5rem;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+/* El contenedor que divide IZQUIERDA (Inputs) y DERECHA (Cards) */
+.asignacion-grid-container {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Columna fija izq, flexible der */
+    gap: 3rem;
+    align-items: start;
+}
+
+/* --- COLUMNA IZQUIERDA (Inputs) --- */
+.columna-configuracion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    background-color: #f8fafc;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.form-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #475569;
+}
+
+/* Inputs y Selects */
+.form-control, .form-select, .form-select-responsable {
+    width: 67% ; /* Que ocupen todo el ancho de su columna */
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        outline: none;
+    }
+
+/* Estilo específico para el selector de responsable y su botón */
+.input-SeleccionarResponsable {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn-AgregarMasResponsables {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .btn-AgregarMasResponsables:hover {
+        background-color: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+/* --- COLUMNA DERECHA (Tarjetas) --- */
+.columna-tarjetas {
+    display: flex;
+    flex-direction: column;
+}
+
+    .columna-tarjetas h6 {
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+    }
+
+/* El Grid que limita a 2 columnas para las cartas */
+#contenedorChips {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+    gap: 10px;
+}
+
+/* --- ÁREA DE DESCRIPCIÓN (Abajo del Grid) --- */
+.form-Descripcion {
+    grid-column: 1 / -1; /* Ocupa todo el ancho si quieres, o déjalo en la columna izq */
+    margin-top: 2rem;
+}
+
+/* --- FOOTER Y BOTONES FINALES --- */
+.modal-footer {
+    padding: 1.5rem 2.5rem;
+    background-color: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.btn-cerrarModalAsignar {
+    background-color: #fff;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-guardarAsignacion {
+    background-color: #0f172a;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #2563eb; /* Azul más moderno que el de BS */
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        color: #ffffff;
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+    }
+    
+
+
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 992px) {
+    .asignacion-grid-container {
+        grid-template-columns: 1fr; /* Se apilan en una columna */
+    }
+
+    .columna-configuracion {
+        width: 100%;
+    }
+
+    #contenedorChips {
+        grid-template-columns: 1fr; /* Cartas una debajo de otra en móvil */
+    }
+}

@@ -1,0 +1,200 @@
+﻿* {
+    padding: 0px;
+    margin: 0px;
+    /* Esto asegura que el padding se cuente HACIA ADENTRO y no sume ancho */
+    box-sizing: border-box;
+}
+
+html, body {
+    /* Evita que cualquier desbordamiento accidental cree el scroll */
+    overflow-x: hidden;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+/*
+  =====================================
+    ESTE ES EL CONTENEDOR DE LOS NODOS
+  =====================================
+*/
+.container-nodos{
+    width: 100%;
+    min-height: 200px; /* Ajusta esto según el tamaño que ves en tu pantalla */
+    background: radial-gradient(circle at center, #1e3a5f 0%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#canvas-home {
+    position: absolute; /* Para que no empuje otros elementos */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block; /* Elimina espacios en blanco extra en la base */
+    z-index: 1; /* Asegura que esté por encima del fondo pero bajo el texto */
+    
+}
+
+.red-nodos {
+
+
+}
+
+
+/*
+  =====================================
+    ESTE ES EL CONTENEDOR DE 
+    LAS OPCIONES QUE SALEN EN HOME
+  =====================================
+*/
+
+.container-home--options {
+    width: 100%;
+    color: white;
+    box-sizing: border-box;
+    padding: 5px;
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    display: grid;
+    /* Creamos 3 columnas de igual tamaño */
+    grid-template-columns: repeat(3, 0fr);
+    /* Creamos 2 filas automáticas */
+    grid-template-rows: auto auto;
+    /* Espacio entre los recuadros */
+    gap:20px;
+    list-style: none;
+    padding: 10px;
+    box-sizing: border-box;
+   
+
+}
+
+
+/*
+  =====================================
+    ESTE SON COMO TAL LOS RECUADROS 
+    QUE SALEN EN HOME
+  =====================================
+*/
+
+.home-options {
+    width: 380px;
+    height: 280px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 1px 5px #0000005e;
+    border-radius: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+    padding-top: 90px;
+}
+
+    .home-options:hover {
+        transform: scale(1.1);
+    }
+
+
+
+/*
+  =====================================
+    ESTE ES EL TEXTO QUE TIENE 
+    CADA RECUADRO DEL HOME
+    Recursos
+    Proyecto
+    Mantenimiento
+    Licencia 
+    Asignación
+    Alerta
+  =====================================
+*/
+
+.home-options--text {
+    width: 100%;
+    height: 50%;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+
+/*
+  ==========================================
+    ESTOS YA SON LOS RECUADROS POR SEPARADO
+    EN BASE A SU FUNCIÓN
+  ==========================================
+*/
+
+/*Recursos*/
+.home-options--recursos {
+    background-image: url("/images/recursos.png");
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+/*Proyecto*/
+
+.home-options--proyecto {
+    background-image: url("/images/proyecto.png");
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+/*Mantenimiento*/
+
+.home-options--mantenimiento {
+    background-image: url("/images/mantenimiento.png");
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+/*Licencia*/
+.home-options--licencia {
+    background-image: url("/images/credenciales.png");
+    background-position: center;
+    background-size: cover;
+}
+
+
+
+/*Asignación*/
+.home-options--asignacion {
+    background-image: url("/images/asignacion.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+/*Alerta*/
+.home-options--alerta {
+    background-image: url("/images/alerta.png");
+    background-position: center;
+    background-size: cover;
+}
+
+/* Elimina estilos de enlace en las tarjetas del Home */
+a.home-options {
+    text-decoration: none;
+    display: flex; /* mantiene el layout flex original */
+    color: inherit;
+}
+
+a.home-options p {
+    color: white;
+}

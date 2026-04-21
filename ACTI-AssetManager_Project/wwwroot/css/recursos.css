@@ -1,0 +1,1179 @@
+﻿/* Reset local */
+.recursos-page * {
+    box-sizing: border-box;
+}
+
+/* Página principal */
+.recursos-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 40px;
+    min-height: calc(100vh - 75px);
+    background-color: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Encabezado de sección */
+.seccion-header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+
+.seccion-titulo {
+    grid-column: 2; /* Obliga al título a estar siempre en la columna central */
+    text-align: center;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.seccion-icon {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
+
+/* Alertas (éxito / error) */
+.alert {
+    padding: 12px 18px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alert-exito {
+    background-color: #d1fae5;
+    border: 1px solid #34d399;
+    color: #065f46;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    border: 1px solid #f87171;
+    color: #991b1b;
+}
+
+/* Panel de filtros */
+.filtros-panel {
+    width: 70%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.filtros-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.filtro-input,
+.filtro-select {
+    padding: 15px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.25s;
+}
+
+.filtro-input {
+    flex: 2;
+    min-width: 100%;
+}
+
+    .filtro-input:focus,
+    .filtro-select:focus {
+        outline: none;
+        border-color: #4facfe;
+        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+    }
+
+/* Botones de acción */
+.btn-accion {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: all 0.25s ease;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+}
+
+    .btn-accion:hover {
+        transform: scale(1.1);
+    }
+
+/* Nuevo / principal */
+.btn-nuevo {
+    width: 200px;
+    background: linear-gradient(135deg, #4facfe 0%, #00c6fb 100%);
+    color: #0f172a;
+    box-shadow: 0 2px 8px rgba(79, 172, 254, 0.35);
+    grid-column: 3;
+    justify-self: end; /* Lo pega a la derecha */
+    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+}
+
+    .btn-nuevo:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(79, 172, 254, 0.5);
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+/* Filtrar */
+.btn-filtrar {
+    background-color: #1e293b;
+    color: #ffffff;
+}
+
+    .btn-filtrar:hover {
+        background-color: #0f172a;
+        transform: translateY(-1px);
+    }
+
+/* Limpiar / Cancelar */
+.btn-limpiar {
+    grid-column: 3; /* Envía el botón a la tercera columna */
+    justify-self: end; /* Lo pega al borde derecho de su columna */
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+    .btn-limpiar:hover {
+        background-color: #cbd5e1;
+        text-decoration: none;
+    }
+
+/* Editar */
+.btn-editar {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.8rem;
+    padding: 10px 12px;
+}
+
+    .btn-editar:hover {
+        background-color: #bfdbfe;
+        text-decoration: none;
+    }
+
+/* Eliminar */
+.btn-eliminar {
+    background-color: #fee2e2;
+    color: #dc2626;
+    font-size: 0.8rem;
+    padding: 10px 12px;
+}
+
+    .btn-eliminar:hover {
+        background-color: #fecaca;
+    }
+
+/* Tabla */
+.tabla-wrapper {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    overflow: hidden;
+}
+
+.tabla-recursos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+    .tabla-recursos thead {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: #ffffff;
+    }
+
+        .tabla-recursos thead th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid #4facfe;
+            text-align: center;
+        }
+
+    .tabla-recursos tbody tr {
+        border-bottom: 1px solid #f1f5f9;
+        transition: background-color 0.15s;
+    }
+
+        .tabla-recursos tbody tr:hover {
+            background-color: #f0f9ff;
+        }
+
+    .tabla-recursos tbody td {
+        padding: 13px 16px;
+        color: #334155;
+        vertical-align: middle;
+    }
+
+.col-asignarResponsable {
+    text-align: center;
+}
+
+.btn-asignar {
+    width: 75px;
+    height: 33px;
+    background-color: #5cb85c;
+    color: white;
+    transition: all 0.3s ease;
+    text-align: center;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+    .btn-asignar:hover {
+        background-color: #5cb85c;
+        transform: scale(1.1);
+    }
+
+
+.tabla-recursos tbody td.col-acciones {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.sin-resultados {
+    text-align: center;
+    color: #94a3b8;
+    padding: 40px !important;
+    font-size: 0.95rem;
+}
+
+/* Badges de estado */
+.badge {
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.badge-activo {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.badge-disponible {
+    background-color: #d9eff8;
+    color: #175ee1;
+    border: 1px solid #14a7ef;
+}
+
+.badge-enUso {
+    background-color: #fef3c7;
+    color: #92400e; /* Café oscuro para que se lea bien sobre el naranja */
+    border: 1px solid #fcd343;
+}
+
+.badge-PorVencer {
+    background-color: #fce7f3; /* Rosa pastel suave */
+    color: #9d174d; /* El guinda que ya usas (muy legible) */
+    border: 1px solid #f9a8d4;
+}
+
+.badge-reparacion {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+
+.badge-baja {
+    background-color: #f5cdde; /* Fondo rojo muy pálido para que resalte el borde */
+    color: #b91c1c; /* Rojo sangre fuerte para el texto */
+    border: 1px solid #ef4444;
+}
+
+.badge-default {
+    background-color: #e2e8f0;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+
+/* Formulario (Form.cshtml) */
+.form-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    padding: 32px 36px;
+    max-width: 860px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.label-opcional {
+    font-weight: 400;
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+.form-input {
+    padding: 9px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+    .form-input:focus {
+        outline: none;
+        border-color: #4facfe;
+        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+    }
+
+.input-error {
+    border-color: #f87171 !important;
+}
+
+.form-validacion {
+    color: #dc2626;
+    font-size: 0.8rem;
+}
+
+.form-acciones {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .recursos-page {
+        padding: 20px 16px;
+    }
+
+    .seccion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .filtros-grupo {
+        flex-direction: column;
+    }
+
+    .filtro-input,
+    .filtro-select {
+        width: 20%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabla-wrapper {
+        overflow-x: auto;
+    }
+}
+
+/* Modal de confirmación */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    animation: fadeInOverlay 0.2s ease;
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-card {
+    width: 400px;
+    background: #0f1a24;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    animation: slideUpModal 0.25s ease;
+}
+
+@keyframes slideUpModal {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-top-shape {
+    height: 8px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.modal-body {
+    padding: 32px 30px 28px;
+    text-align: center;
+    color: white;
+}
+
+.modal-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.modal-titulo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #f1f5f9;
+}
+
+.modal-mensaje {
+    font-size: 0.92rem;
+    color: #94a3b8;
+    margin-bottom: 28px;
+    line-height: 1.5;
+}
+
+    .modal-mensaje strong {
+        color: #e2e8f0;
+    }
+
+.modal-acciones {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-modal {
+    padding: 10px 28px;
+    border-radius: 50px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-modal-cancelar {
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+    .btn-modal-cancelar:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+
+.btn-modal-confirmar {
+    background: linear-gradient(135deg, #e7204e, #ff4d6d);
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 32, 78, 0.4);
+}
+
+    .btn-modal-confirmar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(231, 32, 78, 0.6);
+    }
+
+
+/*MODAL PARA ASIGNAR RESPONSABLE RECURSOS*/
+
+.contenedor-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Oscurece el fondo */
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(2px); /* Opcional: difumina un poco el fondo */
+}
+
+.modal-contenido {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: aparecerModal 0.3s ease-out;
+}
+
+@keyframes aparecerModal {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+.btn-cancelar {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-guardar {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/*ESTILO DE LOS ICONOS DE TIPO RECURSO*/
+.tipo-recurso-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre el icono y el texto */
+}
+
+.icon-tipo {
+    font-size: 1.1rem;
+    color: #4a90e2; /* Un azul suave para los iconos */
+    width: 20px; /* Ancho fijo para que el texto siempre empiece en el mismo lugar */
+    text-align: center;
+}
+
+/* Colores opcionales por tipo para dar más claridad visual */
+.fa-laptop {
+    color: #2ecc71;
+}
+/* Verde para laptops */
+.fa-server {
+    color: #e67e22;
+}
+/* Naranja para servidores */
+.fa-key {
+    color: #f1c40f;
+}
+/* Amarillo para licencias */
+.fa-user-shield {
+    color: #9b59b6;
+}
+/* Morado para cuentas */
+
+/*Estilo del botón para liberar recursos*/
+
+.contenedor-botones_Liberar_Mantenimiento {
+    display: flex;
+    justify-content: flex-end;
+    align-items
+        
+        :center;
+    width: 100%;
+    height: 40px;
+}
+
+    .contenedor-botones_Liberar_Mantenimiento button {
+        border: none;
+        color: white;
+        border-radius: 5px;
+        padding: 10px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+
+
+        .contenedor-botones_Liberar_Mantenimiento button:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+
+.btn-liberar {
+    background-color: #f8a60a;
+    margin-right:10px;
+}
+
+.btn-DarMantenimiento {
+    background-color: #ef4444;
+}
+
+
+/*Estilos Paginado*/
+/* Contenedor principal */
+.paginacion-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Lista de botones */
+.paginacion-lista {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 8px; /* Espacio entre botones */
+    align-items: center;
+}
+
+/* Estilo base de los links */
+.paginacion-link {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: #4b5563; /* Gris oscuro */
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+    /* Efecto Hover */
+    .paginacion-link:hover:not(.disabled) {
+        background-color: #f3f4f6;
+        border-color: #d1d5db;
+        transform: translateY(-2px);
+    }
+
+/* Página Activa (Donde estás actualmente) */
+.paginacion-item.active .paginacion-link {
+    background-color: #3b82f6; /* Azul primario */
+    color: white;
+    border-color: #3b82f6;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+/* Estado Deshabilitado (Anterior/Siguiente cuando no hay más) */
+.paginacion-item.disabled .paginacion-link {
+    color: #d1d5db;
+    background-color: #f9fafb;
+    cursor: not-allowed;
+    border-color: #f3f4f6;
+    box-shadow: none;
+}
+
+/* Ajuste para los botones de texto (Anterior/Siguiente) */
+.paginacion-item:first-child .paginacion-link,
+.paginacion-item:last-child .paginacion-link {
+    padding: 10px 20px;
+}
+
+/* ==========================================================================
+   Estilos para los Chips de Filtro (Botones de Categoría)
+   ========================================================================== */
+
+/* 1. Contenedor Principal: Asegura que el grupo ocupe su espacio y tenga margen */
+.filtros-categorias-container {
+    margin-bottom: 25px; /* Espacio con la tabla */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* 2. El Grid/Flex: Alinea los botones horizontalmente con buen espacio */
+.chips-grid {
+    display: flex;
+    flex-wrap: wrap; /* Permite que bajen si no caben en móviles */
+    gap: 12px; /* Espacio uniforme entre botones */
+    align-items: center;
+}
+
+/* 3. Estilo Base del Botón (Chip): El estado "en reposo" */
+.chip-button {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre icono y texto */
+    padding: 10px 20px; /* Relleno cómodo */
+    background-color: #ffffff;
+    border: 2px solid #e5e7eb; /* Gris claro sutil */
+    border-radius: 50px; /* Hace que sean completamente redondeados (píldora) */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Animación suave para hover y active */
+    /* Tipografía */
+    font-family: inherit;
+    font-weight: 600; /* Textoセミnegrita */
+    font-size: 0.95rem;
+    color: #4b5563; /* Gris oscuro suave */
+    /* Limpieza de estilos por defecto */
+    outline: none;
+    box-shadow: none;
+}
+
+/* 4. Estilo de los Iconos dentro de los Chips */
+.chip-icon {
+    width: 22px; /* Tamaño consistente */
+    height: 22px;
+    object-fit: contain; /* Asegura que no se deforme la imagen */
+    transition: all 0.3s ease;
+}
+
+/* 5. Efecto Hover: Cuando pasas el mouse por encima */
+.chip-button:hover:not(.active) {
+    border-color: #93c5fd; /* Azul claro */
+    background-color: #eff6ff; /* Fondo azul muy tenue */
+    transform: translateY(-2px); /* Pequeño levantamiento */
+    color: #1d4ed8; /* Texto un poco más azul */
+}
+
+/* 6. ESTADO ACTIVO (Seleccionado): El estilo cuando el filtro está aplicado */
+.chip-button.active {
+    background-color: #2563eb; /* Azul primario intenso */
+    color: #ffffff; /* Texto blanco para contraste */
+    border-color: #2563eb;
+    /* Sombra elegante para dar profundidad */
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    ;
+}
+
+
+/* 8. Ajuste para el botón "Todos" (que no tiene icono) */
+.chip-button .chip-text {
+    /* Asegura que el texto se alinee bien incluso sin icono */
+    line-height: 1;
+}
+
+.contenedor-botones-FiltroRecursos {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/*Estilos de contenedor los filtros que muestran los estados de cada recurso*/
+
+.contenedor-label-filtros-estados {
+    width: 100%;
+    text-align: center;
+}
+
+.contenedor-filtros-estados {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.chips-grid-estados {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.seccion-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+}
+
+
+.chip-estado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #4b5563;
+    transition: all 0.4s ease;
+}
+
+/* El punto de color al lado del texto */
+.punto-indicador {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #d1d5db; /* Gris por defecto */
+}
+
+/* Colores específicos por estado */
+.color-disponible .punto-indicador {
+    background-color: #10b981;
+}
+/* Verde */
+.color-vigente .punto-indicador {
+    background-color: #3b82f6;
+}
+/* Azul */
+.color-enuso .punto-indicador {
+    background-color: #6366f1;
+}
+/* Indigo */
+.color-alerta .punto-indicador {
+    background-color: #f59e0b;
+}
+/* Naranja */
+.color-peligro .punto-indicador {
+    background-color: #dc2626;
+}
+
+.color-mantenimiento .punto-indicador {
+    background-color: #0ea5e9;
+}
+/* Rojo */
+
+.btn-todos-FiltroEstado {
+    background-color:#ffffff;
+}
+
+/* Hover */
+.chip-estado:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+    transform: scale(1.1);
+}
+
+/* ESTADO ACTIVO: Cuando el chip está seleccionado */
+.chip-estado.active {
+    border-color: #374151;
+    background-color: #f3f4f6;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transform: scale(0.98); /* Efecto de presionado */
+}
+
+    /* Si quieres que el activo resalte el color del texto */
+    .chip-estado.active.color-disponible {
+        color: #047857;
+        border-color: #10b981;
+        background-color: #ecfdf5;
+    }
+
+    .chip-estado.active.color-peligro {
+        color: #dc2626;
+        border-color: #ef4444;
+        background-color: #fef2f2;
+    }
+
+    .chip-estado.active.color-alerta {
+        color: #9a3412;
+        border-color: #f59e0b;
+        background-color: #fff7ed;
+    }
+
+    .chip-estado.active.color-enuso {
+        color: #4338ca;
+        border-color: #6366f1;
+        background-color: #eef2ff;
+    }
+
+    .chip-estado.active.color-vigente {
+        color: #1e40af;
+        border-color: #3b82f6;
+        background-color: #eff6ff;
+    }
+
+    .chip-estado.active.color-mantenimiento {
+        background-color: #ecfeff;
+        color: #0c4a6e;
+        border: 1px solid #1ad3f6;
+    }
+
+    .chip-estado.active.btn-todos-FiltroEstado {
+        background-color: #4a89f0;
+        color: white;
+        border-color: #1d212b;
+    }
+
+
+
+/* 9. Responsividad: En pantallas muy pequeñas, reducimos un poco el padding */
+@media (max-width: 600px) {
+    .chip-button {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+
+    .chip-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* ==========================================================================
+   SECCIÓN RESPONSIVE (Móviles y Tablets)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .filtros-panel {
+        width: 90%; /* En tablets el panel de filtros se ensancha */
+    }
+}
+
+@media (max-width: 768px) {
+    .recursos-page {
+        padding: 15px; /* Menos espacio en las orillas */
+    }
+
+    /* 1. Header: Título y botones se apilan */
+    .seccion-header {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .seccion-titulo {
+        font-size: 1.3rem;
+    }
+
+    .btn-nuevo {
+        width: 100%; /* El botón "Nuevo" ocupa todo el ancho */
+        justify-self: center;
+    }
+
+    /* 2. Filtros: Los inputs ocupan el 100% */
+    .filtros-panel {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .filtro-input {
+        min-width: 100%;
+    }
+
+    .contenedor-botones-FiltroRecursos {
+        flex-direction: column; /* Botones Filtrar/Limpiar uno sobre otro */
+    }
+
+    .btn-accion {
+        width: 100%;
+    }
+
+    /* 3. Chips: Permitir que fluyan de forma natural */
+    .chips-grid, .chips-grid-estados {
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .chip-button, .chip-estado {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    /* 4. TABLA RESPONSIVE: La clave para que no se rompa el diseño */
+    .tabla-wrapper {
+        overflow-x: auto; /* Permite scroll horizontal solo en la tabla */
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+
+    .tabla-recursos {
+        min-width: 600px; /* Obliga a la tabla a no encogerse de más */
+    }
+}
+
+@media (max-width: 480px) {
+    /* 5. Ajustes para celulares muy pequeños */
+    .seccion-titulo {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.7rem;
+    }
+
+    .tabla-recursos thead th {
+        padding: 10px 8px;
+        font-size: 0.75rem;
+    }
+}
+
+/* ==========================================================================
+   ESPECÍFICO PARA MÓVILES PEQUEÑOS (Galaxy S8+, iPhone, etc. < 400px)
+   ========================================================================== */
+
+@media (max-width: 400px) {
+    /* 1. Reducir el padding de la página para ganar espacio lateral */
+    .recursos-page {
+        padding: 10px 8px;
+    }
+
+    /* 2. Ajustar el título y su icono */
+    .seccion-titulo {
+        font-size: 1.2rem;
+        gap: 8px;
+        flex-direction: row; /* Mantener en línea si es corto, o column si es largo */
+    }
+
+    .seccion-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* 3. Panel de filtros al 100% y sin sombras pesadas */
+    .filtros-panel {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* 4. CHIPS: Los botones de tipo e icono deben ser más compactos */
+    .chip-button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        gap: 5px;
+    }
+
+    .chip-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* 5. ESTADOS: Reducir el tamaño para que quepan más por fila */
+    .chips-grid-estados {
+        gap: 6px;
+    }
+
+    .chip-estado {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
+
+    /* 6. TABLA: Forzar el scroll horizontal para que no se amontone el texto */
+    .tabla-wrapper {
+        margin: 0 -8px; /* Rompe el padding del padre para llegar al borde */
+        border-radius: 0; /* Se ve mejor a pantalla completa en móviles */
+    }
+
+    .tabla-recursos {
+        min-width: 550px; /* Asegura que las columnas tengan aire */
+    }
+
+        .tabla-recursos thead th {
+            padding: 10px 5px;
+            font-size: 0.7rem;
+        }
+
+        .tabla-recursos tbody td {
+            padding: 8px 5px;
+            font-size: 0.8rem;
+        }
+
+    /* 7. BADGES: Más pequeños para que no ocupen toda la celda */
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+    }
+
+    /* 8. Botón NUEVO: Que no se pierda el estilo de gradiente */
+    .btn-nuevo {
+        font-size: 0.85rem;
+        padding: 12px;
+    }
+}
+
+/*BOTÓN ELIMINAR TIPO RECURSO*/
+
+.btn-eliminar-modal {
+    background-color: #dc3545; /* Rojo estándar de peligro */
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-right: auto; /* Esto lo empuja a la izquierda si el contenedor es flex */
+    
+}
+
+    .btn-eliminar-modal:hover {
+        background-color: #bb2d3b; /* Rojo más oscuro al pasar el mouse */
+        transform: translateY(-2px);
+    }
+
+    .btn-eliminar-modal:active {
+        background-color: #a52834;
+        transform: scale(0.98); /* Efecto de pulsado */
+    }
+
+    /* Opcional: Si quieres que tenga un borde sutil */
+    .btn-eliminar-modal:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+    }
+

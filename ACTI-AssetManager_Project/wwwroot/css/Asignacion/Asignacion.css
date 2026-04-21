@@ -1,0 +1,209 @@
+﻿/* --- ESTILO DE LA TABLA PROYECTOS (BASADO EN RECURSOS) --- */
+
+
+.menu-interaccion {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-btnCrearAsignacion {
+    width: 80%;
+}
+
+.contenedor-filtros-panel {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    margin-top:30px;
+}
+
+.filtros-panel {
+    width: 80%;
+    display: flex;
+    box-sizing: border-box;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+}
+
+.filtro-input {
+    width: 100%;
+    padding: 15px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: border-color 0.25s;
+}
+
+    .filtro-input:focus {
+        outline: none;
+        border-color: #4facfe;
+        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+    }
+
+.btn-CrearAsignacion {
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-CrearAsignacion:hover {
+        transform: translateY(-3px);
+    }
+
+.seccion-titulo {
+    width: 100%;
+    text-align: center;
+}
+
+    .seccion-titulo h1 {
+        font-weight: 500;
+    }
+
+.catalogoDeAsignaciones {
+    width: 100% !important;
+    display: block !important; /* Cambia flex por block si lo tenías */
+    overflow-x: auto;
+    padding:30px;
+}
+
+.tabla-proyectos {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #ffffff;
+}
+
+#tablaAsignaciones {
+    width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse;
+}
+
+/* Aplicando tu estética de Recursos a la cabecera */
+.tabla-proyectos thead th {
+    padding: 14px 16px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    border-bottom: 2px solid #4facfe; /* Tu línea azul característica */
+    text-align: center;
+    color: #ffff;
+    background-color: #1a2436;
+}
+
+    /* Estilo para las celdas del cuerpo */
+    .tabla-proyectos tbody td {
+        padding: 12px 16px;
+        text-align:center;
+        font-size: 0.9rem;
+        color: #475569;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: middle;
+    }
+
+    /* Efecto hover para las filas */
+    .tabla-proyectos tbody tr:hover {
+        background-color: rgba(79, 172, 254, 0.05); /* Un azul muy tenue al pasar el mouse */
+        transition: background-color 0.2s ease;
+    }
+
+    /* Ajuste para que la columna de descripción no se vea amontonada */
+    .tabla-proyectos td:nth-child(2) {
+        max-width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Contenedor de acciones */
+    .tabla-proyectos .acciones-container {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+    }
+
+.btn-tabla {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.2s;
+    font-size: 1.1rem;
+}
+
+/* Botón Editar (Sutil) */
+.btn-editar-tabla {
+    color: #4facfe;
+}
+
+    .btn-editar-tabla:hover {
+        background-color: rgba(79, 172, 254, 0.1);
+        transform: scale(1.1);
+    }
+
+/* Botón Eliminar (Sutil) */
+.btn-eliminar-tabla {
+    color: #f87171;
+}
+
+    .btn-eliminar-tabla:hover {
+        background-color: rgba(248, 113, 113, 0.1);
+        transform: scale(1.1);
+    }
+
+.btn-ver-responsables {
+    background-color: #f1f5f9; /* Gris azulado muy claro */
+    color: #475569; /* Gris oscuro elegante */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .btn-ver-responsables i {
+        margin-right: 12px;
+        vertical-align: middle;
+        font-size: 1.1rem;
+        color: #4facfe; /* El azul que usas en la tabla para el icono */
+    }
+
+    /* Efecto al pasar el mouse */
+    .btn-ver-responsables:hover {
+        background-color: #e2e8f0;
+        color: #0f172a;
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+    }
+
+    .btn-ver-responsables:active {
+        transform: translateY(0);
+    }
