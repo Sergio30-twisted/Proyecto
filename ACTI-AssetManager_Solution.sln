@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11605.240 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACTI-AssetManager_Project", "ACTI-AssetManager_Project\ACTI-AssetManager_Project.csproj", "{23A7AA3E-652E-4CD0-8A7E-FBFFB4A78330}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACTI-AssetManager_Project.Application", "ACTI-AssetManager_Project.Application\ACTI-AssetManager_Project.Application.csproj", "{5933EE3F-DCE2-4A40-A846-690D6AA5044C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACTI-AssetManager_Project.Infrastructure", "ACTI-AssetManager_Project.Infrastructure\ACTI-AssetManager_Project.Infrastructure.csproj", "{4C41FFE3-2B6A-479B-9655-589482539DA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACTI-AssetManager_Project.Tests", "ACTI-AssetManager_Project.Tests\ACTI-AssetManager_Project.Tests.csproj", "{F8EDA7C7-0422-460A-A9F7-16E681ACDC01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4C41FFE3-2B6A-479B-9655-589482539DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C41FFE3-2B6A-479B-9655-589482539DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C41FFE3-2B6A-479B-9655-589482539DA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8EDA7C7-0422-460A-A9F7-16E681ACDC01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8EDA7C7-0422-460A-A9F7-16E681ACDC01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8EDA7C7-0422-460A-A9F7-16E681ACDC01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8EDA7C7-0422-460A-A9F7-16E681ACDC01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

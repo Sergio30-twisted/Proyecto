@@ -389,11 +389,18 @@ namespace ACTI_AssetManager_Project.Application.Services
 
         public async Task<TipoRecurso> RegistrarNuevoTipoAsync(CrearTipoRecursoDto dto)
         {
-            // A) Regla de negocio: No nombres duplicados
-            bool existe = await _repo.ExisteTipoNombreAsync(dto.Nombre);
+            // CASO: Campo Obligatorio y Espacios en Blanco
+            if (string.IsNullOrWhiteSpace(dto.Nombre))
+                return null;
+
+            // CASO: Límite de Caracteres
+            if (dto.Nombre.Trim().Length > 50)
+                return null;
+
+            // CASO: Evitar Duplicados
+            bool existe = await _repo.ExisteTipoNombreAsync(dto.Nombre.Trim());
             if (existe) return null;
 
-            // B) MAPEAMOS de la petición a la Entidad de BD (AMTipoRecurso)
             var entidad = new TipoRecurso
             {
                 NombreTipoRecurso = dto.Nombre.Trim(),
@@ -401,11 +408,8 @@ namespace ACTI_AssetManager_Project.Application.Services
                 FechaHoraCambio = DateTime.Now
             };
 
-            // C) Le decimos al Repo que lo guarde
             await _repo.GuardarTipoRecursoAsync(entidad);
-
-           return entidad;
-
+            return entidad;
         }
 
         /*METODOS SERVICES PARA EL CASO DE USO CREAR TIPO RECURSO Obtener los datos de un Tipo Recurso por Id*/
