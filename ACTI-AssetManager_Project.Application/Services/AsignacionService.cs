@@ -24,6 +24,11 @@ namespace ACTI_AssetManager_Project.Application.Services
 
         public async Task<bool> CrearAsignacionAsync(AsignacionDto dto)
         {
+            if (dto.RecursosIds == null || !dto.RecursosIds.Any())
+            {
+                return false;
+            }
+
             var nuevaAsignacion = new Asignacion
             {
                 IdProyecto = dto.IdProyecto,
