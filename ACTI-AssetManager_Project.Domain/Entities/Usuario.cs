@@ -18,6 +18,7 @@ namespace ACTI_AssetManager_Project.Domain.Entities
         public bool Eliminado { get; set; }
         public DateTime FechaHoraCambio { get; set; }
         public string IdUsuarioCambio { get; set; }
+        public string? CorreoElectronico { get; set; }
 
         [NotMapped] // Esto le dice al Entity Framework que ignore esta propiedad en la DB
         public string RutaFoto { get; set; } = "/images/user.png";

@@ -149,6 +149,7 @@ header {
 
 .dropdown-content {
     display: none;
+    flex-direction: column;
     position: absolute;
     right: 0;
     top: calc(100% + 8px);
@@ -162,15 +163,55 @@ header {
 }
 
     .dropdown-content.show {
-        display: block;
+        display: flex;
         animation: fadeInDropdown 0.25s ease-out;
     }
 
 /* ===================================================
+    DISEÑO DEL BOTÓN AGREGAR USUARIOS
+   =================================================== */
+/* Contenedor del ítem */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre el círculo y el texto */
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: background 0.3s;
+    color: white;
+}
+
+/* EL CÍRCULO DEL ICONO */
+.icon-circle {
+    width: 32px;
+    height: 32px;
+    background-color: #2d9dbe1a; /* Azul translúcido como la imagen */
+    border-radius: 50%; /* Lo hace círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+    /* Estilo del icono dentro del círculo */
+    .icon-circle i {
+        color: #4facfe !important; /* Azul cian */
+        font-size: 1.1rem !important;
+        display: inline-block !important; /* A veces Recursos le pone display: none */
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+/* EFECTO HOVER */
+
+.dropdown-item:hover {
+    background-color: rgb(72, 153, 225, 0.20);
+}
+
+
+/* ===================================================
     DISEÑO DEL BOTÓN DEL LOGOUT
    =================================================== */
-
-
 .btn-logout {
     width: 100%;
     display: flex;
@@ -210,4 +251,129 @@ header {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* ===================================================
+    MODAL AGREGAR USUARIO (PROTEGIDO)
+   =================================================== */
+
+/* --- OVERLAY (FONDO) --- */
+.reg-user-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(15, 23, 42, 0.7) !important;
+    backdrop-filter: blur(8px) !important;
+    display: none; /* Controlado por JS */
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 999999 !important;
+}
+
+    .reg-user-overlay.is-active {
+        display: flex !important;
+    }
+
+/* --- CONTENEDOR BLANCO --- */
+.reg-user-container {
+    background: white !important;
+    width: 90% !important;
+    max-width: 450px !important;
+    border-radius: 20px !important;
+    padding: 30px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+}
+
+/* --- INPUTS (Para que no se vean feos) --- */
+.reg-user-input, .reg-user-select {
+    width: 100% !important; /* Asegura el ancho total */
+    padding: 12px 16px !important;
+    margin-top: 5px !important;
+    margin-bottom: 15px !important;
+    border: 2px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background-color: #f8fafc !important;
+    box-sizing: border-box !important; /* IMPORTANTE */
+    display: block !important;
+}
+
+/* --- BOTONES (Recuperando el estilo premium) --- */
+.reg-user-footer {
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+}
+
+.reg-user-btn-cancel {
+    flex: 1 !important;
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+    border: none !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+}
+
+.reg-user-btn-save {
+    flex: 2 !important;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3) !important;
+}
+
+/* --- LA SOLUCIÓN AL ICONO --- */
+.icon-circle {
+    width: 32px !important;
+    height: 32px !important;
+    background-color: rgba(79, 172, 254, 0.2) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+    .icon-circle i {
+        color: #4facfe !important;
+        font-size: 1.1rem !important;
+        font-style: normal !important; /* Evita que Recursos lo ponga en cursiva */
+    }
+
+.reg-user-close-x {
+    position: absolute !important;
+    top: 15px !important;
+    right: 20px !important;
+    /* Eliminar fondo y bordes */
+    background: none !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    /* Estilo de la X */
+    color: #ef4444 !important; /* Rojo vibrante */
+    font-size: 1.8rem !important;
+    font-weight: 300 !important; /* Más fina se ve más elegante */
+    line-height: 1 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    opacity: 0.7; /* Un poco tenue por defecto */
+}
+
+    .reg-user-close-x:hover {
+        color: #b91c1c !important; /* Rojo más oscuro al pasar el mouse */
+        transform: scale(1.1);
+        opacity: 1; /* Se ilumina al pasar el mouse */
+    }
+
+.swal2-container {
+    z-index: 1000000 !important;
 }

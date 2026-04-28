@@ -8,10 +8,10 @@
     <div class="container-option">
         <ul>
             <li><a asp-controller="Recursos" asp-action="Index">Recursos</a></li>
-            <li><a asp-controller="Mantenimiento" asp-action="Index">Mantenimiento</a></li>
+            <li><a asp-controller="Asignacion" asp-action="Index">Asignación de Recursos</a></li>
+            <li><a asp-controller="Proyecto" asp-action="Index">Proyectos</a></li>
             <li><a asp-controller="Alerta" asp-action="Index">Alerta</a></li>
-            <li><a asp-controller="Asignacion" asp-action="Index">Asignación de Proyectos</a></li>
-            <li><a asp-controller="Licencia" asp-action="Index">Licencia</a></li>
+
         </ul>
     </div>
 
@@ -26,6 +26,14 @@
 
         @* Muestra el menú siempre para poder usar el botón de Logout y limpiar la cookie vieja *@
         <div id="userDropdown" class="dropdown-content">
+
+            <a href="javascript:void(0)" class="dropdown-item btn-admin" onclick="abrirRegistroUsuario()">
+                <div class="icon-circle">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <span>Agregar Usuarios</span>
+            </a>
+
             <div class="btn-logout">
                 <a href="/Auth/Logout">
                     Cerrar Sesión
@@ -34,3 +42,51 @@
         </div>
     </div>
 </header>
+
+<div class="reg-user-overlay" id="regUserModal">
+    <div class="reg-user-container">
+        <button type="button" class="reg-user-close-x" onclick="cerrarRegistroUsuario()">&times;</button>
+
+        <h5 class="reg-user-title">Registrar Nuevo Usuario</h5>
+
+        <form id="regUserForm">
+            @Html.AntiForgeryToken()
+
+            <div class="reg-user-field">
+                <label class="reg-user-label">ID de Usuario</label>
+                <input type="text" class="reg-user-input" name="IdUsuario" required placeholder="Ej. 00000123456">
+            </div>
+
+
+            <div class="reg-user-field">
+                <label class="reg-user-label">Nombre Completo</label>
+                <input type="text" class="reg-user-input" name="Nombre" required placeholder="Ej. Marco Valenzuela">
+            </div>
+
+            <div class="reg-user-field">
+                <label class="reg-user-label">Correo Electrónico</label>
+                <input type="email" class="reg-user-input" name="Email" required placeholder="usuario@itson.edu.mx">
+            </div>
+
+            <div class="reg-user-field">
+                <label class="reg-user-label">Contraseña</label>
+                <input type="password" class="reg-user-input" name="Password" required placeholder="********">
+            </div>
+
+            <div class="reg-user-field">
+                <label class="reg-user-label">Tipo de Usuario</label>
+                <select class="reg-user-select" name="Rol">
+                    <option value="Admin">Administrador</option>
+                    <option value="UsuarioComun" selected>Usuario Común</option>
+                </select>
+            </div>
+        </form>
+
+        <div class="reg-user-footer">
+            <button type="button" class="reg-user-btn-cancel" onclick="cerrarRegistroUsuario()">Cancelar</button>
+            <button type="button" class="reg-user-btn-save" onclick="procesarGuardadoUsuario()">
+                <i class="bi bi-person-check-fill"></i> Guardar Usuario
+            </button>
+        </div>
+    </div>
+</div>

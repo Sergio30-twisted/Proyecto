@@ -28,10 +28,17 @@ namespace ACTI_AssetManager_Project.Infrastructure.Repository
             return lista ?? new List<Proyecto>();
         }
 
-        public async Task<bool> InsertarAsync(Proyecto proyecto)
+        public async Task<bool> AgregarAsync(Proyecto proyecto)
         {
-            await _context.Proyectos.AddAsync(proyecto);
-            return await _context.SaveChangesAsync() > 0;
+            try
+            {
+                await _context.Proyectos.AddAsync(proyecto);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<Proyecto> ObtenerPorIdAsync(int id)
