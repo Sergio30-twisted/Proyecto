@@ -210,12 +210,9 @@ namespace ACTI_AssetManager_Project.Application.Data
             {
                 // Especificamos que idAsignacion es la llave primaria e identidad
                 entity.ToTable("AMProyecto", "ACTIVERSE.SYSTEM");
-                entity.HasKey(e => e.idProyecto);
+                entity.HasKey(e =>   e.IdProyecto);
                 entity.Property(e => e.NombreProyecto).HasColumnName("NombreProyecto");
                 entity.Property(e => e.Descripcion).HasColumnName("Descripcion");
-                entity.Property(e => e.FechaInicio).HasColumnName("FechaInicio");
-                entity.Property(e => e.FechaFin).HasColumnName("FechaFin");
-                entity.Property(e => e.Activo).HasColumnName("Activo");
                 entity.Property(e => e.ELIMINADO).HasColumnName("ELIMINADO");
                 entity.Property(e => e.FECHAHORACAMBIO).HasColumnName("FECHAHORACAMBIO");
 

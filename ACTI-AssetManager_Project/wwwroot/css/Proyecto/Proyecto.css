@@ -1,0 +1,231 @@
+﻿* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.contenedor-pagina-proyectos {
+    width: 100%;
+    padding: 20px 0px;
+    background-color: #f8fafc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.resumen {
+    display: flex;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 2%;
+    padding-left: 5%;
+    box-sizing: border-box;
+}
+
+.resumen-card {
+    width: 240px; /* Un ancho fijo suele verse mejor en resúmenes */
+    background-color: #1a202c;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    /* Sombra suave y moderna */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef2f6;
+    /* El detalle de la marca lateral */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: white;
+}
+
+    .resumen-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+
+/* --- TÍTULO Y BOTÓN NUEVO --- */
+.seccion-titulo h1 {
+    color: #1a2332;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.btn-CrearProyecto {
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-weight: 600;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    transition: all 0.4s ease;
+}
+
+    .btn-CrearProyecto:hover {
+        transform: translateY(-2px);
+        background-color: #0056b3;
+        box-shadow: 0 4px 10px rgba(13, 110, 253, 0.2);
+        cursor: pointer;
+    }
+
+/* --- FILTROS Y BUSCADOR --- */
+.contenedor-filtros-panel {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.filtros-panel {
+    width: 90%;
+}
+
+.filtro-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    font-size: 0.9rem;
+}
+
+    .filtro-input:focus {
+        outline: none;
+        border-color: #0d6efd; /* Cambia el color del borde al azul de tu sistema */
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15); /* Crea un resplandor suave */
+        transition: all 0.3s ease;
+    }
+
+.menu-interaccion {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.contenedor-btnCrearProyecto {
+    width: 90%;
+}
+
+
+/* --- LA TABLA (ESTILO EXACTO A LA IMAGEN) --- */
+.catalogoDeProyectos {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    overflow: hidden; /* Esto hace que el header oscuro se redondee en las esquinas */
+}
+
+.tabla-premium {
+    width: 1900px;
+    border-collapse: collapse;
+    margin-bottom: 0;
+}
+
+    /* Encabezado Negro/Azul Oscuro */
+    .tabla-premium thead th {
+        background-color: #1a2332;
+        color: #ffffff;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        padding: 15px;
+        border: none;
+        text-align: center;
+    }
+
+    /* Celdas del Cuerpo */
+    .tabla-premium tbody td {
+        padding: 14px 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #edf2f7;
+        font-size: 0.88rem;
+        color: #4a5568;
+        text-align: center;
+    }
+
+/* Nombre del proyecto resaltado */
+.nombre-proyecto-bold {
+    font-weight: 700;
+    color: #1a202c !important;
+    font-size: 0.9rem;
+}
+
+/* --- BADGES (Píldoras de descripción) --- */
+.badge-status {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-vigente {
+    background-color: #ecf7fa; /* Azul cielo muy suave */
+    color: #02263a; /* Azul profundo para el texto */
+    border: 1px solid #bae6fd;
+    font-size: 13px;
+    font-weight: 700
+}
+
+/* --- BOTONES DE ACCIÓN (Mínimalistas) --- */
+.btn-accion {
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.btn-editar-minimal {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    margin-right: 5px;
+}
+
+    .btn-editar-minimal:hover {
+        background-color: #4f46e5;
+        color: white;
+    }
+
+.btn-eliminar-minimal {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+    .btn-eliminar-minimal:hover {
+        background-color: #e11d48;
+        color: white;
+    }
+
+/* --- MODAL (Ajuste de diseño) --- */
+.contendor-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-contenido {
+    background: white;
+    border-radius: 12px;
+    width: 95%;
+    max-width: 550px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+textarea.reg-user-input {
+    min-height: 100px;
+    resize: none; /* Evita que el usuario deforme el modal */
+    font-family: inherit;
+}

@@ -2,6 +2,7 @@
 using ACTI_AssetManager_Project.Application.Interfaces;
 using ACTI_AssetManager_Project.Domain.Entities;
 using ACTI_AssetManager_Project.Domain.Interfaces;
+using ACTI_AssetManager_Project.Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,15 @@ namespace ACTI_AssetManager_Project.Application.Services
             _proyectoRepo = proyectoRepo;
         }
 
-        public async Task<IEnumerable<Proyecto>> ObtenerTodosLosProyectosAsync()
+        public async Task<IEnumerable<ProyectoDto>> ObtenerTodosLosProyectosAsync()
         {
-            // El Service solo pide los datos al Repo
-            return await _proyectoRepo.ObtenerTodosAsync();
+            var entidades = await _proyectoRepo.ObtenerTodosAsync();
+
+            return entidades.Select(p => new ProyectoDto
+            {
+                IdProyecto = p.IdProyecto,
+                NombreProyecto = p.NombreProyecto
+            }).ToList(); // Convertimos a la lista que espera el ViewModel
         }
 
         public async Task<Proyecto> ObtenerPorIdAsync(int id)
@@ -40,7 +46,7 @@ namespace ACTI_AssetManager_Project.Application.Services
             return proyecto;
         }
 
-        public async Task<bool> RegistrarProyectoAsync(ProyectoDto proyecto)
+        public async Task<bool> RegistrarProyectoAsync(ProyectoDto dto, string idUsuario)
         {
             /*
              EXPLICACIÓN DE LO QUE HACEMOS AQUÍ
@@ -70,19 +76,16 @@ namespace ACTI_AssetManager_Project.Application.Services
              y esto se guarde en la base de datos.
              */
 
-            var proyectoEntidad = new Proyecto()
+            var nuevoProyecto = new Proyecto
             {
-                NombreProyecto = proyecto.NombreProyecto,
-                Descripcion = proyecto.Descripcion,
-                FechaInicio = proyecto.FechaInicio,
-                FechaFin = proyecto.FechaFin,
-                Activo = true,
+                // Si IdProyecto es 0, la DB generará el nuevo ID (si es Identity)
+                NombreProyecto = dto.NombreProyecto,
+                Descripcion = dto.Descripcion,
                 ELIMINADO = false,
                 FECHAHORACAMBIO = DateTime.Now,
             };
 
-            // El Service le pasa la entidad lista al Repo para que la guarde
-            return await _proyectoRepo.InsertarAsync(proyectoEntidad);
+            return await _proyectoRepo.AgregarAsync(nuevoProyecto);
         }
 
         public async Task<bool> EliminarProyectoAsync(int id)
@@ -96,8 +99,7 @@ namespace ACTI_AssetManager_Project.Application.Services
             }
 
             proyectoExistente.ELIMINADO = true;
-            proyectoExistente.Activo = false;
-            proyectoExistente.FECHAHORACAMBIO= DateTime.Now;
+            proyectoExistente.FECHAHORACAMBIO = DateTime.Now;
 
             return await _proyectoRepo.ActualizarAsync(proyectoExistente);
         }
@@ -105,15 +107,13 @@ namespace ACTI_AssetManager_Project.Application.Services
         public async Task<bool> ActualizarProyectoAsync(ProyectoDto model)
         {
             // 1. Buscamos el proyecto actual en la base de datos para no perder datos que no vienen en el DTO
-            var proyectoExistente = await _proyectoRepo.ObtenerPorIdAsync(model.IdProyeto);
+            var proyectoExistente = await _proyectoRepo.ObtenerPorIdAsync(model.IdProyecto);
 
             if (proyectoExistente == null) return false;
 
             // 2. Actualizamos solo los campos que vienen del formulario
             proyectoExistente.NombreProyecto = model.NombreProyecto;
             proyectoExistente.Descripcion = model.Descripcion;
-            proyectoExistente.FechaInicio = model.FechaInicio;
-            proyectoExistente.FechaFin = model.FechaFin;
 
             // 3. Importante: Actualizamos la auditoría
             proyectoExistente.FECHAHORACAMBIO = DateTime.Now;

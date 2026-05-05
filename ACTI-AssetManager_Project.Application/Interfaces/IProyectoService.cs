@@ -10,10 +10,9 @@ namespace ACTI_AssetManager_Project.Application.Interfaces
 {
     public interface IProyectoService
     {
-        Task<IEnumerable<Proyecto>> ObtenerTodosLosProyectosAsync();
+        Task<IEnumerable<ProyectoDto>> ObtenerTodosLosProyectosAsync();
 
-        Task<bool> RegistrarProyectoAsync(ProyectoDto proyecto);
-
+        Task<bool> RegistrarProyectoAsync(ProyectoDto dto, string idUsuario);
         Task<bool> EliminarProyectoAsync(int id);
 
         Task<Proyecto> ObtenerPorIdAsync(int id);

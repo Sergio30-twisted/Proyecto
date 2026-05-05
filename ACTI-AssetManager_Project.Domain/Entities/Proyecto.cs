@@ -10,12 +10,9 @@ namespace ACTI_AssetManager_Project.Domain.Entities
     public class Proyecto
     {
         [Key]
-        public int idProyecto { get; set; }
+        public int IdProyecto { get; set; }
         public string NombreProyecto { get; set; }
         public string? Descripcion { get; set; }
-        public DateOnly? FechaInicio { get; set; }
-        public DateOnly? FechaFin { get; set; }
-        public bool Activo { get; set; }
         public bool ELIMINADO { get; set; }
         public DateTime FECHAHORACAMBIO { get; set; }
 

@@ -8,7 +8,7 @@ namespace ACTI_AssetManager_Project.Application.DTOs
 {
     public class ProyectoDto
     {
-        public int IdProyeto { get; set; }
+        public int IdProyecto { get; set; }
 
         public string NombreProyecto { get; set; }
 
