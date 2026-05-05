@@ -24,10 +24,9 @@ namespace ACTI_AssetManager_Project.Tests.Integration
         private readonly EstadoRecurso _estadoDisponible;
         private readonly EstadoRecurso _estadoMantenimiento;
 
-        // Constructor: se ejecuta antes de CADA test 
+        // Constructor
         public RegistrarRecursoMantenimientoTests()
         {
-            // Cada test recibe una base de datos In-Memory distinta para garantizar aislamiento completo entre pruebas.
             var options = new DbContextOptionsBuilder<AM_DBContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
@@ -35,7 +34,6 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             _context = new AM_DBContext(options);
             _repository = new RecursoRepository(_context);
 
-            // Sembramos los catálogos que todas las pruebas necesitan
             _categoriaHardware = new CategoriaRecurso { IdCategoria = 1, Nombre = "Hardware" };
 
             _tipoHardware = new TipoRecurso
@@ -70,7 +68,6 @@ namespace ACTI_AssetManager_Project.Tests.Integration
         // Limpieza
         public void Dispose() => _context.Dispose();
 
-        // Registrar un recurso directamente con estado Mantenimiento
         [Fact]
         public async Task RegistrarRecurso_ConEstadoMantenimiento_DebeGuardarseEnBD()
         {
@@ -96,8 +93,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.Equal("LAP-001", guardado.CodigoInterno);
         }
 
-        // CASO 2: Cambiar estado de Disponible → Mantenimiento (UpdateAsync)
-        // Simula el flujo real del módulo: un recurso existente pasa a mantenimiento
+        // CASO 2: Cambiar estado de Disponible a Mantenimiento 
         [Fact]
         public async Task ActualizarRecurso_DeDisponibleAMantenimiento_DebeReflejarNuevoEstado()
         {
@@ -125,10 +121,8 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.Equal((int)EstadoRecursoEnum.Mantenimiento, actualizado.IdEstado);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CASO 3: ObtenerEstadoMantenimientoRep solo devuelve los correctos
+        // ObtenerEstadoMantenimientoRep solo devuelve los correctos
         // El método del repositorio filtra por IdEstado == 6 y Eliminado == false
-        // ─────────────────────────────────────────────────────────────────────
         [Fact]
         public async Task ObtenerEstadoMantenimientoRep_DebeRetornarSoloRecursosEnMantenimiento()
         {
@@ -169,7 +163,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
                 IdTipoRecurso = _tipoHardware.IdTipoRecurso,
                 IdEstado = (int)EstadoRecursoEnum.Mantenimiento,
                 FechaAdquisicion = DateTime.Today,
-                Eliminado = true,   // Borrado lógico → NO debe aparecer
+                Eliminado = true,   
                 FechaHoraCambio_Creacion_Recurso = DateTime.Now,
                 IdUsuarioCambio = "admin01"
             };
@@ -186,10 +180,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.All(resultado, r => Assert.False(r.Eliminado));
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CASO 4: Un recurso en Mantenimiento NO aparece en GetAllAsync
-        //         si está marcado como Eliminado
-        // ─────────────────────────────────────────────────────────────────────
+        // Un recurso en Mantenimiento no aparece en GetAllAsync si está marcado como Eliminado
         [Fact]
         public async Task GetAllAsync_NoDebeIncluirRecursosEliminadosAunqueEstenEnMantenimiento()
         {
@@ -214,9 +205,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.DoesNotContain(todos, r => r.CodigoInterno == "LAP-099");
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CASO 5: SoftDelete de un recurso en Mantenimiento → ya no aparece
-        // ─────────────────────────────────────────────────────────────────────
+        // SoftDelete de un recurso en Mantenimiento  ya no aparece
         [Fact]
         public async Task SoftDelete_RecursoEnMantenimiento_NoDebeAparecer()
         {
@@ -245,9 +234,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.DoesNotContain(todos, r => r.IdRecurso == recurso.IdRecurso);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CASO 6: GetByIdAsync devuelve el recurso en Mantenimiento correctamente
-        // ─────────────────────────────────────────────────────────────────────
+        // GetByIdAsync devuelve el recurso en Mantenimiento correctamente
         [Fact]
         public async Task GetByIdAsync_RecursoEnMantenimiento_DebeRetornarloConRelaciones()
         {
@@ -272,13 +259,11 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.NotNull(encontrado);
             Assert.Equal("LAP-060", encontrado.CodigoInterno);
             Assert.Equal((int)EstadoRecursoEnum.Mantenimiento, encontrado.IdEstado);
-            Assert.NotNull(encontrado.TipoRecurso);           // Include funcionando
+            Assert.NotNull(encontrado.TipoRecurso);           
             Assert.Equal("Laptop", encontrado.TipoRecurso.NombreTipoRecurso);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CASO 7: Paginado – un recurso en Mantenimiento aparece en el filtro correcto
-        // ─────────────────────────────────────────────────────────────────────
+        // Un recurso en Mantenimiento aparece en el filtro correcto
         [Fact]
         public async Task GetRecursosParaPaginadoAsync_FiltrandoPorMantenimiento_DebeRetornarSolosEllos()
         {
@@ -322,11 +307,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.Equal("LAP-070", recursos.First().CodigoInterno);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // CASO 8: Código interno duplicado → ambos registros con estados distintos
-        //         Verifica que el sistema no impide registros con mismo código si
-        //         la BD no tiene restricción UNIQUE (comportamiento actual del dominio)
-        // ─────────────────────────────────────────────────────────────────────
+        // Verifica que el sistema no impide registros con mismo código si
         [Fact]
         public async Task RegistrarDosRecursos_ConMismoCodigoYEstadoDiferente_DebenExistirIndependientemente()
         {
