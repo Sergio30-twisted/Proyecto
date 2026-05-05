@@ -7,18 +7,14 @@ using Xunit;
 
 namespace ACTI_AssetManager_Project.Tests.Integration
 {
-    /// Pruebas de integración para el módulo: Registrar Recurso en Mantenimiento.
-    /// Estas pruebas validan la colaboración real entre el RecursoRepository
-    /// y el AM_DBContext usando una base de datos In-Memory, sin mocks del
-    /// repositorio. Se verifica que la lógica de persistencia y consulta
-    /// del estado Mantenimiento (IdEstado = 6) funcione de extremo a extremo.
+    /// Pruebas de integración para el módulo: Registrar Recurso en Mantenimiento
     public class RegistrarRecursoMantenimientoTests : IDisposable
     {
-        // ── Contexto e infraestructura ────────────────────────────────────────
+        //  Contexto e infraestructura 
         private readonly AM_DBContext _context;
         private readonly RecursoRepository _repository;
 
-        // ── Datos maestros compartidos por todos los tests ────────────────────
+        //  Datos compartidos por todos los tests 
         private readonly CategoriaRecurso _categoriaHardware;
         private readonly TipoRecurso _tipoHardware;
         private readonly EstadoRecurso _estadoDisponible;
@@ -93,7 +89,7 @@ namespace ACTI_AssetManager_Project.Tests.Integration
             Assert.Equal("LAP-001", guardado.CodigoInterno);
         }
 
-        // CASO 2: Cambiar estado de Disponible a Mantenimiento 
+        // Cambiar estado de Disponible a Mantenimiento 
         [Fact]
         public async Task ActualizarRecurso_DeDisponibleAMantenimiento_DebeReflejarNuevoEstado()
         {
